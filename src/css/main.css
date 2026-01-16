@@ -17,9 +17,9 @@
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-x: none;
 }
 
 body {
@@ -29,7 +29,12 @@ body {
   line-height: var(--line-height-normal);
   color: var(--color-text-primary);
   background-color: var(--color-background);
-  overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
+body.modal-open {
+  overflow-y: hidden;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -152,4 +157,58 @@ video {
 :focus-visible {
   outline: 2px solid var(--color-champagne-gold);
   outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GRAFFITI DIVIDER
+   ═══════════════════════════════════════════════════════════ */
+
+.graffiti-divider {
+  position: relative;
+  width: 100%;
+  height: 35vh;
+  overflow: hidden;
+  background-color: var(--color-noir);
+}
+
+.graffiti-divider__video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FIXED HOME BUTTON
+   ═══════════════════════════════════════════════════════════ */
+
+.home-button {
+  position: fixed;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 9999;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-havana);
+  background: rgba(10, 10, 10, 0.7);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid rgba(196, 167, 125, 0.3);
+  transition: background 0.3s var(--ease-luxury),
+              color 0.3s var(--ease-luxury),
+              border-color 0.3s var(--ease-luxury);
+}
+
+.home-button:hover {
+  background: rgba(196, 167, 125, 0.9);
+  color: var(--color-noir);
+  border-color: var(--color-havana);
 }

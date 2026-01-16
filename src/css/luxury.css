@@ -1,0 +1,127 @@
+/**
+ * Sasha Khan — LUXURY Cards Styles
+ * Cards inside bags-intro, sweep in chasing video to left margin
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   LUXURY CARDS CONTAINER — Positioned at very left of viewport
+   ═══════════════════════════════════════════════════════════ */
+
+.luxury-cards-container {
+  position: absolute;
+  top: 5vh;
+  left: var(--space-xs);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  z-index: 10;
+  height: 90vh;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INDIVIDUAL LUXURY CARD — Sized to fit all 3 vertically
+   ═══════════════════════════════════════════════════════════ */
+
+.luxury-card {
+  /* Height: ~30% of viewport to fit 3 cards with gaps */
+  width: auto;
+  height: calc((90vh - 2 * 4px) / 3); /* 3 cards, 2 gaps of 4px */
+  aspect-ratio: 16 / 9;
+  transform: translateX(100vw); /* Start off-screen right */
+  will-change: transform;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-noir);
+  flex-shrink: 0;
+  /* 3D flip perspective */
+  perspective: 2000px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLIP CARD INNER - 3D Transform Container
+   ═══════════════════════════════════════════════════════════ */
+
+.luxury-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  border-radius: var(--radius-sm);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLIP CARD FACES - Front (LUX) and Back (ODE)
+   ═══════════════════════════════════════════════════════════ */
+
+.luxury-card__face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.luxury-card__face--front {
+  z-index: 2;
+}
+
+.luxury-card__face--back {
+  transform: rotateY(180deg);
+}
+
+.luxury-card__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Active state glow */
+.luxury-card.is-active {
+  box-shadow:
+    var(--shadow-md),
+    0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .luxury-cards-container {
+    left: var(--space-xs);
+    gap: 2px;
+    height: 85vh;
+  }
+
+  .luxury-card {
+    height: calc((85vh - 2 * 2px) / 3);
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-cards-container {
+    gap: 2px;
+    height: 80vh;
+  }
+
+  .luxury-card {
+    height: calc((80vh - 2 * 2px) / 3);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .luxury-card {
+    transform: translateX(0);
+    transition: none;
+  }
+}

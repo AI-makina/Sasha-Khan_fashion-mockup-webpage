@@ -1,0 +1,153 @@
+/**
+ * Sasha Khan — Cities Section Styles
+ * Fashion Capital Cards with animated letters
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   CITIES SECTION CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+
+.cities {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-noir);
+  padding: var(--space-lg) 0 var(--space-md) 0;
+  overflow: hidden;
+}
+
+.cities__container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  gap: var(--space-md);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INDIVIDUAL CARDS
+   ═══════════════════════════════════════════════════════════ */
+
+.cities__card {
+  position: relative;
+  flex: 1;
+  max-width: 280px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+
+  /* Container for letter sizing */
+  container-type: size;
+
+  /* Initial state - off screen to the right */
+  opacity: 0;
+  transform: translateX(100vw);
+  transition: transform 0.8s var(--ease-luxury), opacity 0.8s var(--ease-luxury);
+}
+
+/* Staggered animation delays for sweep-in */
+.cities__card[data-index="0"] { transition-delay: 0s; }
+.cities__card[data-index="1"] { transition-delay: 0.1s; }
+.cities__card[data-index="2"] { transition-delay: 0.2s; }
+.cities__card[data-index="3"] { transition-delay: 0.3s; }
+.cities__card[data-index="4"] { transition-delay: 0.4s; }
+
+/* Active state - in position */
+.cities__card.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD IMAGES
+   ═══════════════════════════════════════════════════════════ */
+
+.cities__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD LETTERS
+   ═══════════════════════════════════════════════════════════ */
+
+.cities__card-letter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  font-family: var(--font-heading);
+  /* Letter fills almost entire card height */
+  font-size: 90cqh;
+  font-weight: var(--font-weight-regular);
+  color: white;
+  opacity: 0;
+
+  /* Letter styling matching reference */
+  line-height: 0.85;
+  text-transform: uppercase;
+
+  /* Smooth fade transition */
+  transition: opacity 0.5s var(--ease-smooth);
+
+  /* Prevent text selection */
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Letter visible state - 43% opacity as specified */
+.cities__card-letter.is-visible {
+  opacity: 0.43;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+  .cities__card {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 900px) {
+  .cities__container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cities__card {
+    flex: 0 0 calc(33.333% - var(--space-md));
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .cities {
+    padding: var(--space-lg) 0;
+  }
+
+  .cities__card {
+    flex: 0 0 calc(50% - var(--space-sm));
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .cities__card {
+    transform: translateX(0);
+    opacity: 1;
+    transition: none;
+  }
+
+  .cities__card-letter {
+    transition: none;
+  }
+}

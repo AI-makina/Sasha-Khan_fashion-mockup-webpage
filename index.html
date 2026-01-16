@@ -13,25 +13,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&family=Cinzel:wght@400;500;600&family=Poiret+One&display=swap" rel="stylesheet">
 
   <!-- Preload critical assets -->
   <link rel="preload" href="assets/logo/sasha-khan-logo.png" as="image">
-  <link rel="preload" href="assets/videos/hero-section/modeling1.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="assets/videos/hero-section/modeling1_extended.mp4" as="video" type="video/mp4">
   <link rel="preload" href="assets/videos/hero-section/modeling2.mp4" as="video" type="video/mp4">
   <link rel="preload" href="assets/videos/hero-section/modeling3.mp4" as="video" type="video/mp4">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="src/css/variables.css">
-  <link rel="stylesheet" href="src/css/main.css">
-  <link rel="stylesheet" href="src/css/hero.css">
-  <link rel="stylesheet" href="src/css/animations.css">
-  <link rel="stylesheet" href="src/css/responsive.css">
+  <link rel="stylesheet" href="src/css/variables.css?v=3">
+  <link rel="stylesheet" href="src/css/main.css?v=10">
+  <link rel="stylesheet" href="src/css/hero.css?v=16">
+  <link rel="stylesheet" href="src/css/animations.css?v=2">
+  <link rel="stylesheet" href="src/css/responsive.css?v=2">
+  <link rel="stylesheet" href="src/css/cities.css?v=3">
+  <link rel="stylesheet" href="src/css/luxury.css?v=3">
+  <link rel="stylesheet" href="src/css/bags.css?v=3">
+  <link rel="stylesheet" href="src/css/products.css?v=9">
+  <link rel="stylesheet" href="src/css/catwalk.css?v=1">
+  <link rel="stylesheet" href="src/css/clothing.css?v=12">
+  <link rel="stylesheet" href="src/css/glasses.css?v=9">
+  <link rel="stylesheet" href="src/css/world-press.css?v=2">
+  <link rel="stylesheet" href="src/css/contact.css?v=4">
 
   <!-- Favicon (placeholder) -->
   <link rel="icon" type="image/png" href="assets/logo/sasha-khan-logo.png">
 </head>
 <body>
+  <!-- Fixed Home Button -->
+  <a href="#main-content" class="home-button" aria-label="Return to top">HOME</a>
+
   <!-- Skip to main content link for accessibility -->
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
 
@@ -47,10 +59,11 @@
         muted
         loop
         playsinline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
       >
-        <source src="assets/videos/hero-section/modeling1.mp4" type="video/mp4">
+        <source src="assets/videos/hero-section/galloping5-h265.mp4" type="video/mp4; codecs=hvc1">
+        <source src="assets/videos/hero-section/galloping5.mp4" type="video/mp4">
       </video>
       <div class="hero-triangle__overlay" aria-hidden="true"></div>
       <div class="hero-triangle__content">
@@ -65,10 +78,11 @@
         muted
         loop
         playsinline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
       >
-        <source src="assets/videos/hero-section/modeling2.mp4" type="video/mp4">
+        <source src="assets/videos/hero-section/two-horses-modeling-h265.mp4" type="video/mp4; codecs=hvc1">
+        <source src="assets/videos/hero-section/two-horses-modeling.mp4" type="video/mp4">
       </video>
       <div class="hero-triangle__overlay" aria-hidden="true"></div>
       <div class="hero-triangle__content">
@@ -83,10 +97,11 @@
         muted
         loop
         playsinline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
       >
-        <source src="assets/videos/hero-section/modeling3.mp4" type="video/mp4">
+        <source src="assets/videos/hero-section/photo-shootout-h265.mp4" type="video/mp4; codecs=hvc1">
+        <source src="assets/videos/hero-section/photo-shootout.mp4" type="video/mp4">
       </video>
       <div class="hero-triangle__overlay" aria-hidden="true"></div>
       <div class="hero-triangle__content">
@@ -106,6 +121,47 @@
       <div class="hero-triangle__content">
         <h2 class="hero-triangle__title">Collections</h2>
       </div>
+
+      <!-- Collections Menu -->
+      <nav class="collections-menu" aria-label="Collections navigation">
+        <ul class="collections-menu__list">
+          <!-- Carries -->
+          <li class="collections-menu__item collections-menu__item--has-submenu">
+            <span class="collections-menu__label">Carries</span>
+            <ul class="collections-menu__submenu">
+              <li class="collections-menu__submenu-header">Collections</li>
+              <li><a href="#" class="collections-menu__link" data-scroll-target="lux">LUX</a></li>
+              <li><a href="#" class="collections-menu__link" data-scroll-target="ode">ODE</a></li>
+            </ul>
+          </li>
+
+          <!-- Outwear -->
+          <li class="collections-menu__item collections-menu__item--has-submenu">
+            <span class="collections-menu__label">Outwear</span>
+            <ul class="collections-menu__submenu">
+              <li class="collections-menu__submenu-header">Collections</li>
+              <li><a href="elite.html" class="collections-menu__link">ELITE</a></li>
+              <li><a href="freedom.html" class="collections-menu__link">FREEDOM</a></li>
+              <li><a href="glamour.html" class="collections-menu__link">GLAMOUR</a></li>
+            </ul>
+          </li>
+
+          <!-- Eyewear -->
+          <li class="collections-menu__item">
+            <a href="xxvi-sion.html" class="collections-menu__label collections-menu__label--link">Eyewear</a>
+          </li>
+
+          <!-- Press -->
+          <li class="collections-menu__item">
+            <a href="#world-press-section" class="collections-menu__label collections-menu__label--link">Press</a>
+          </li>
+
+          <!-- Contact -->
+          <li class="collections-menu__item">
+            <a href="#contact-section" class="collections-menu__label collections-menu__label--link">Contact</a>
+          </li>
+        </ul>
+      </nav>
     </article>
 
     <!-- CENTER LOGO -->
@@ -127,6 +183,13 @@
       <line x1="100" y1="0" x2="0" y2="100" vector-effect="non-scaling-stroke"/>
     </svg>
 
+    <!-- CLICKABLE TRIANGLE LINKS OVERLAY -->
+    <nav class="hero-links" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; pointer-events: none;" aria-label="Collection navigation">
+      <a href="freedom.html" class="hero-links__area hero-links__area--top" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; pointer-events: auto; clip-path: polygon(0 0, 100% 0, 50% 50%);" aria-label="View Freedom collection"></a>
+      <a href="elite.html" class="hero-links__area hero-links__area--left" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; pointer-events: auto; clip-path: polygon(0 0, 50% 50%, 0 100%);" aria-label="View Elite collection"></a>
+      <a href="glamour.html" class="hero-links__area hero-links__area--right" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; pointer-events: auto; clip-path: polygon(100% 0, 50% 50%, 100% 100%);" aria-label="View Glamour collection"></a>
+    </nav>
+
     <!-- SCROLL INDICATOR -->
     <div class="hero-scroll-indicator" aria-hidden="true">
       <span class="hero-scroll-indicator__text">Scroll</span>
@@ -136,16 +199,609 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       PLACEHOLDER FOR ADDITIONAL SECTIONS
+       CITIES SECTION — Fashion Capital Cards
        ═══════════════════════════════════════════════════════════ -->
+  <section class="cities" id="cities-section" aria-label="Fashion Capitals">
+    <div class="cities__container">
+      <!-- Card 1 -->
+      <article class="cities__card" data-index="0">
+        <img
+          class="cities__card-image"
+          src="assets/images/transition/card-1.png"
+          alt="Fashion model"
+          loading="lazy"
+        >
+        <span class="cities__card-letter" aria-hidden="true"></span>
+      </article>
 
-  <!-- Future sections will go here -->
-  <!-- <section class="about">...</section> -->
-  <!-- <section class="collections">...</section> -->
-  <!-- <section class="contact">...</section> -->
+      <!-- Card 2 -->
+      <article class="cities__card" data-index="1">
+        <img
+          class="cities__card-image"
+          src="assets/images/transition/card-2.png"
+          alt="Fashion model"
+          loading="lazy"
+        >
+        <span class="cities__card-letter" aria-hidden="true"></span>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="cities__card" data-index="2">
+        <img
+          class="cities__card-image"
+          src="assets/images/transition/card-3.png"
+          alt="Fashion model"
+          loading="lazy"
+        >
+        <span class="cities__card-letter" aria-hidden="true"></span>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="cities__card" data-index="3">
+        <img
+          class="cities__card-image"
+          src="assets/images/transition/card-4.png"
+          alt="Fashion model"
+          loading="lazy"
+        >
+        <span class="cities__card-letter" aria-hidden="true"></span>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="cities__card" data-index="4">
+        <img
+          class="cities__card-image"
+          src="assets/images/transition/card-5.png"
+          alt="Fashion model"
+          loading="lazy"
+        >
+        <span class="cities__card-letter" aria-hidden="true"></span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GRAFFITI DIVIDER
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="graffiti-divider" aria-label="Sasha Khan Graffiti">
+    <video
+      class="graffiti-divider__video"
+      muted
+      playsinline
+      preload="auto"
+    >
+      <source src="assets/videos/graffiti/sasha graffiti 4.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BAGS INTRO SECTION — Keyhole Video
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bags-intro" id="bags-intro-section" aria-label="Bags Introduction">
+    <div class="bags-intro__video-container">
+      <!-- Keyhole Video -->
+      <video
+        class="bags-intro__video"
+        muted
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="assets/videos/bags/keyhole-h265.mp4" type="video/mp4; codecs=hvc1">
+        <source src="assets/videos/bags/keyhole.mp4" type="video/mp4">
+      </video>
+
+      <!-- LUX/ODE Flip Cards -->
+      <div class="luxury-cards-container">
+        <!-- Card 1: L → O -->
+        <article class="luxury-card" data-letter="L" data-index="0">
+          <div class="luxury-card__inner">
+            <div class="luxury-card__face luxury-card__face--front">
+              <video
+                class="luxury-card__video luxury-card__video--lux"
+                src="assets/videos/luxury-cards/L.mp4"
+                muted
+                playsinline
+                preload="auto"
+                aria-hidden="true"
+              ></video>
+            </div>
+            <div class="luxury-card__face luxury-card__face--back">
+              <video
+                class="luxury-card__video luxury-card__video--ode"
+                src="assets/videos/luxury-cards/O.mp4"
+                muted
+                playsinline
+                preload="auto"
+                aria-hidden="true"
+              ></video>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: U → D -->
+        <article class="luxury-card" data-letter="U" data-index="1">
+          <div class="luxury-card__inner">
+            <div class="luxury-card__face luxury-card__face--front">
+              <video
+                class="luxury-card__video luxury-card__video--lux"
+                src="assets/videos/luxury-cards/U.mp4"
+                muted
+                playsinline
+                preload="auto"
+                aria-hidden="true"
+              ></video>
+            </div>
+            <div class="luxury-card__face luxury-card__face--back">
+              <video
+                class="luxury-card__video luxury-card__video--ode"
+                src="assets/videos/luxury-cards/D.mp4"
+                muted
+                playsinline
+                preload="auto"
+                aria-hidden="true"
+              ></video>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: X → E -->
+        <article class="luxury-card" data-letter="X" data-index="2">
+          <div class="luxury-card__inner">
+            <div class="luxury-card__face luxury-card__face--front">
+              <video
+                class="luxury-card__video luxury-card__video--lux"
+                src="assets/videos/luxury-cards/X.mp4"
+                muted
+                playsinline
+                preload="auto"
+                aria-hidden="true"
+              ></video>
+            </div>
+            <div class="luxury-card__face luxury-card__face--back">
+              <video
+                class="luxury-card__video luxury-card__video--ode"
+                src="assets/videos/luxury-cards/E.mp4"
+                muted
+                playsinline
+                preload="auto"
+                aria-hidden="true"
+              ></video>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- LUX Product Cards (horizontal strips on right, aligned with LUX cards) -->
+      <div class="products-container products-container--lux">
+        <div class="product-card product-card--lune" data-index="0">
+          <div class="product-card__info">
+            <img class="product-card__name" src="assets/images/bags/names/Lune.png" alt="Lune" loading="lazy">
+            <button class="product-card__detail-btn" data-product="lune">Details</button>
+          </div>
+        </div>
+        <div class="product-card product-card--ulysse" data-index="1">
+          <div class="product-card__info">
+            <img class="product-card__name" src="assets/images/bags/names/Ulysse.png" alt="Ulysse" loading="lazy">
+            <button class="product-card__detail-btn" data-product="ulysse">Details</button>
+          </div>
+        </div>
+        <div class="product-card product-card--xeline" data-index="2">
+          <div class="product-card__info">
+            <img class="product-card__name" src="assets/images/bags/names/Xeline.png" alt="Xeline" loading="lazy">
+            <button class="product-card__detail-btn" data-product="xeline">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ODE Product Cards (replace LUX products during flip transition) -->
+      <div class="products-container products-container--ode">
+        <div class="product-card product-card--oriane" data-index="0">
+          <div class="product-card__info">
+            <img class="product-card__name" src="assets/images/bags/names/Oriane.png" alt="Oriane" loading="lazy">
+            <button class="product-card__detail-btn" data-product="oriane">Details</button>
+          </div>
+        </div>
+        <div class="product-card product-card--diane" data-index="1">
+          <div class="product-card__info">
+            <img class="product-card__name" src="assets/images/bags/names/Diane.png" alt="Diane" loading="lazy">
+            <button class="product-card__detail-btn" data-product="diane">Details</button>
+          </div>
+        </div>
+        <div class="product-card product-card--elise" data-index="2">
+          <div class="product-card__info">
+            <img class="product-card__name" src="assets/images/bags/names/Elise.png" alt="Élise" loading="lazy">
+            <button class="product-card__detail-btn" data-product="elise">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Detail Modals -->
+      <div class="product-modal" id="modal-lune">
+        <div class="product-modal__content">
+          <button class="product-modal__close" aria-label="Close">&times;</button>
+          <div class="product-modal__image">
+            <img src="assets/images/bags/lune_model.png" alt="Model wearing Lune handbag">
+          </div>
+          <div class="product-modal__details">
+            <h3 class="product-modal__title">LUNE</h3>
+            <p class="product-modal__subtitle">Elegant evening bag · Soft silhouettes</p>
+            <div class="product-modal__section">
+              <h4>Materials</h4>
+              <p>Supple Italian calfskin with a satin finish, lined with natural suede. Subtle gold-toned hardware, hand-polished. Magnetic closure concealed within the silhouette.</p>
+            </div>
+            <div class="product-modal__section">
+              <h4>Statement</h4>
+              <p>LUNE is an ode to nocturnal elegance. Softly sculpted and fluid, it moves effortlessly from dusk to evening, catching the light with quiet sophistication. Designed for moments that feel intimate yet unforgettable, LUNE embodies feminine grace, restraint, and timeless allure.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-modal" id="modal-ulysse">
+        <div class="product-modal__content">
+          <button class="product-modal__close" aria-label="Close">&times;</button>
+          <div class="product-modal__image">
+            <img src="assets/images/bags/Ulysse_model.png" alt="Model wearing Ulysse handbag">
+          </div>
+          <div class="product-modal__details">
+            <h3 class="product-modal__title">ULYSSE</h3>
+            <p class="product-modal__subtitle">Structured handbag · Heritage-inspired design</p>
+            <div class="product-modal__section">
+              <h4>Materials</h4>
+              <p>Full-grain Italian leather with a natural texture, reinforced leather panels, and hand-stitched edges. Interior lined in fine cotton twill. Palladium-finished hardware inspired by archival craftsmanship.</p>
+            </div>
+            <div class="product-modal__section">
+              <h4>Statement</h4>
+              <p>ULYSSE represents strength, journey, and legacy. With its architectural structure and refined detailing, it is a modern heirloom — grounded in tradition yet confidently contemporary. Designed for women who carry purpose with elegance, ULYSSE is a statement of enduring sophistication.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-modal" id="modal-xeline">
+        <div class="product-modal__content">
+          <button class="product-modal__close" aria-label="Close">&times;</button>
+          <div class="product-modal__image">
+            <img src="assets/images/bags/xeline_mdoel.png" alt="Model wearing Xeline handbag">
+          </div>
+          <div class="product-modal__details">
+            <h3 class="product-modal__title">XÉLINE</h3>
+            <p class="product-modal__subtitle">Refined statement piece · Modern couture</p>
+            <div class="product-modal__section">
+              <h4>Materials</h4>
+              <p>Smooth French leather with a soft sheen, paired with sculptural hardware accents. Microfiber suede interior for a clean, modern finish. Precision-cut edges and seamless construction.</p>
+            </div>
+            <div class="product-modal__section">
+              <h4>Statement</h4>
+              <p>XÉLINE is bold refinement. Minimal yet expressive, it balances modern couture lines with effortless femininity. Created for those who command presence without excess, XÉLINE transforms simplicity into power, redefining luxury through clarity and confidence.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ODE Product Modals -->
+      <div class="product-modal" id="modal-oriane">
+        <div class="product-modal__content">
+          <button class="product-modal__close" aria-label="Close">&times;</button>
+          <div class="product-modal__image">
+            <img src="assets/images/bags/oriane_model.png" alt="Model wearing Oriane handbag">
+          </div>
+          <div class="product-modal__details">
+            <h3 class="product-modal__title">ORIANE</h3>
+            <p class="product-modal__subtitle">Luminous statement · Modern elegance</p>
+            <div class="product-modal__section">
+              <h4>Materials</h4>
+              <p>Fine-grain Italian leather with a soft sheen, complemented by sculptural metal accents. Interior lined in microfiber suede. Precision-finished edges for a clean, contemporary silhouette.</p>
+            </div>
+            <div class="product-modal__section">
+              <h4>Statement</h4>
+              <p>ORIANE captures light and movement. Radiant yet restrained, it reflects a modern vision of femininity — confident, fluid, and luminous. Created for moments that call for presence without ostentation, ORIANE is elegance in motion.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-modal" id="modal-diane">
+        <div class="product-modal__content">
+          <button class="product-modal__close" aria-label="Close">&times;</button>
+          <div class="product-modal__image">
+            <img src="assets/images/bags/diane_model.png" alt="Model wearing Diane handbag">
+          </div>
+          <div class="product-modal__details">
+            <h3 class="product-modal__title">DIANE · PRINCESSE</h3>
+            <p class="product-modal__subtitle">Regal structure · Timeless authority</p>
+            <div class="product-modal__section">
+              <h4>Materials</h4>
+              <p>Structured full-grain leather with reinforced panels, hand-stitched detailing, and a natural leather lining. Palladium-finished hardware inspired by heritage equestrian codes.</p>
+            </div>
+            <div class="product-modal__section">
+              <h4>Statement</h4>
+              <p>DIANE · PRINCESSE embodies strength and nobility. With its architectural lines and composed silhouette, it reinterprets classic authority through a feminine lens. A modern heirloom, designed for women who lead with grace and conviction.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-modal" id="modal-elise">
+        <div class="product-modal__content">
+          <button class="product-modal__close" aria-label="Close">&times;</button>
+          <div class="product-modal__image">
+            <img src="assets/images/bags/elise_model.png" alt="Model wearing Élise handbag">
+          </div>
+          <div class="product-modal__details">
+            <h3 class="product-modal__title">ÉLISE</h3>
+            <p class="product-modal__subtitle">Understated icon · Everyday refinement</p>
+            <div class="product-modal__section">
+              <h4>Materials</h4>
+              <p>Supple calf leather with a matte finish, paired with a soft cotton-sateen lining. Minimalist brushed metal hardware, crafted for durability and discretion.</p>
+            </div>
+            <div class="product-modal__section">
+              <h4>Statement</h4>
+              <p>ÉLISE is the essence of quiet luxury. Effortless, timeless, and impeccably balanced, it accompanies the everyday with natural elegance. Designed to transcend seasons, ÉLISE is refinement made instinctive.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CATWALK SECTION — Video with horizontal scroll exit
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="catwalk" id="catwalk-section" aria-label="Catwalk and Clothing">
+    <div class="catwalk__video-container">
+      <video
+        class="catwalk__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="assets/videos/cloths-intro/catwalk-2-h265.mp4" type="video/mp4; codecs=hvc1">
+        <source src="assets/videos/cloths-intro/catwalk-2.mp4" type="video/mp4">
+      </video>
+
+      <!-- Clothing triptych - sweep in from right as video exits left -->
+      <div class="clothing__container" id="clothing-section">
+
+        <!-- FREEDOM Panel -->
+        <article class="clothing-panel" data-collection="freedom" aria-label="Freedom Collection">
+          <img class="clothing-panel__image"
+               src="assets/images/clothing/freedom/camila/angle-1.png"
+               alt="Camila - Freedom Collection">
+          <a href="freedom.html" class="clothing-panel__btn">Freedom</a>
+        </article>
+
+        <!-- GLAMOUR Panel -->
+        <article class="clothing-panel" data-collection="glamour" aria-label="Glamour Collection">
+          <img class="clothing-panel__image"
+               src="assets/images/clothing/glamour/maria/angle-1.png"
+               alt="Maria - Glamour Collection">
+          <a href="glamour.html" class="clothing-panel__btn">Glamour</a>
+        </article>
+
+        <!-- ELITE Panel -->
+        <article class="clothing-panel" data-collection="elite" aria-label="Elite Collection">
+          <img class="clothing-panel__image"
+               src="assets/images/clothing/elite/jewl/angle-1.png?v=2"
+               alt="Jewl - Elite Collection">
+          <a href="elite.html" class="clothing-panel__btn">Elite</a>
+        </article>
+
+        <!-- Diagonal Dividers with opacity gradient -->
+        <svg class="clothing-dividers" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <!-- Gradient for first diagonal (goes from top-left to bottom-right direction) -->
+            <linearGradient id="divider-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C4A77D" stop-opacity="0"/>
+              <stop offset="30%" stop-color="#C4A77D" stop-opacity="0.8"/>
+              <stop offset="50%" stop-color="#C4A77D" stop-opacity="1"/>
+              <stop offset="70%" stop-color="#C4A77D" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#C4A77D" stop-opacity="0"/>
+            </linearGradient>
+            <!-- Gradient for second diagonal -->
+            <linearGradient id="divider-gradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C4A77D" stop-opacity="0"/>
+              <stop offset="30%" stop-color="#C4A77D" stop-opacity="0.8"/>
+              <stop offset="50%" stop-color="#C4A77D" stop-opacity="1"/>
+              <stop offset="70%" stop-color="#C4A77D" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#C4A77D" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Diagonal divider between panel 1 and 2 (angled line) -->
+          <line x1="28" y1="0" x2="38" y2="100" stroke="url(#divider-gradient-1)" stroke-width="0.2" vector-effect="non-scaling-stroke"/>
+          <!-- Diagonal divider between panel 2 and 3 (angled line) -->
+          <line x1="62" y1="0" x2="72" y2="100" stroke="url(#divider-gradient-2)" stroke-width="0.2" vector-effect="non-scaling-stroke"/>
+        </svg>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GLASSES SECTION — Scroll-driven video playback
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="glasses" id="glasses-section" aria-label="Glasses Collection">
+    <div class="glasses__video-container">
+      <video
+        class="glasses__video"
+        muted
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="assets/videos/glasses/glasses.mp4" type="video/mp4">
+      </video>
+      <a href="xxvi-sion.html" class="glasses__overlay-link">
+        <span class="glasses__overlay-text">20-XXVI-SION</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       WORLD PRESS SECTION — Editorial Magazine Layout
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="world-press" id="world-press-section" aria-label="World Press">
+    <div class="world-press__container">
+
+      <!-- Editorial Header -->
+      <header class="world-press__header">
+        <span class="world-press__eyebrow">Featured In</span>
+        <h2 class="world-press__title">World Press</h2>
+        <div class="world-press__rule"></div>
+      </header>
+
+      <!-- Editorial Layout Grid -->
+      <div class="world-press__editorial">
+
+        <!-- Left Column: Text Content -->
+        <div class="world-press__column world-press__column--text">
+
+          <!-- Opening Paragraph with Drop Cap -->
+          <p class="world-press__paragraph world-press__paragraph--dropcap">
+            Sasha Khan made a stunning debut at <strong class="world-press__location">Paris</strong> Fashion Week, captivating audiences with the brand's signature blend of opulence and modern femininity. In <strong class="world-press__location">Rio de Janeiro</strong>, the collection shared the runway alongside Victoria's Secret and Givenchy, cementing its place among fashion's elite.
+          </p>
+
+          <!-- Pull Quote -->
+          <blockquote class="world-press__pullquote">
+            <span class="world-press__quote-mark">"</span>
+            <p>Unapologetic luxury and architectural elegance</p>
+            <cite>— <em>Vogue</em>, Winter Edition</cite>
+          </blockquote>
+
+          <!-- Continuing Text -->
+          <p class="world-press__paragraph">
+            The <strong class="world-press__location">Rome</strong> Gala brought together world-renowned philanthropists as Sasha Khan unveiled exclusive pieces to raise funds for charitable causes. Most recently, <em class="world-press__publication">Vogue's</em> Winter Edition dedicated a feature spread to the brand's latest collection.
+          </p>
+
+          <p class="world-press__paragraph">
+            From the catwalks of <strong class="world-press__location">Europe</strong> to the pages of fashion's most coveted publication, Sasha Khan continues to redefine haute couture for the modern era.
+          </p>
+
+        </div>
+
+        <!-- Right Column: Hero Image -->
+        <div class="world-press__column world-press__column--hero">
+          <figure class="world-press__figure world-press__figure--hero">
+            <div class="world-press__image-frame">
+              <img src="assets/images/world-press/vogue-cover.png" alt="Sasha Khan Vogue Cover" loading="lazy">
+            </div>
+            <figcaption class="world-press__figcaption">
+              <em>Vogue</em> Winter Edition
+            </figcaption>
+          </figure>
+        </div>
+
+      </div>
+
+      <!-- Secondary Image Row -->
+      <div class="world-press__secondary">
+        <div class="world-press__rule world-press__rule--wide"></div>
+
+        <figure class="world-press__figure world-press__figure--secondary">
+          <div class="world-press__image-frame world-press__image-frame--offset">
+            <img src="assets/images/world-press/rome-gala.png" alt="Sasha Khan presentation at Rome Gala" loading="lazy">
+          </div>
+          <figcaption class="world-press__figcaption">
+            Rome Gala Presentation · Exclusive Preview
+          </figcaption>
+        </figure>
+
+        <div class="world-press__closing">
+          <p class="world-press__tagline">Redefining haute couture for the modern era</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CONTACT SECTION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="contact" id="contact-section" aria-label="Contact">
+    <div class="contact__container">
+
+      <!-- Video Cards -->
+      <div class="contact__cards">
+        <div class="contact__card contact__card--center" data-card="1">
+          <video class="contact__video" muted playsinline preload="auto">
+            <source src="assets/videos/contact/contact clip_1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="contact__card contact__card--left" data-card="3">
+          <video class="contact__video" muted playsinline preload="auto">
+            <source src="assets/videos/contact/contact clip_3.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="contact__card contact__card--right" data-card="2">
+          <video class="contact__video" muted playsinline preload="auto">
+            <source src="assets/videos/contact/contact clip_2.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="contact__info">
+        <header class="contact__header">
+          <span class="contact__eyebrow">Get in Touch</span>
+          <h2 class="contact__title">Contact</h2>
+          <div class="contact__rule"></div>
+        </header>
+
+        <div class="contact__details">
+          <div class="contact__block">
+            <h3 class="contact__label">Atelier</h3>
+            <address class="contact__address">
+              <p>Sasha Khan Couture</p>
+              <p>1535 Broadway, Suite 42</p>
+              <p>Times Square, New York</p>
+              <p>NY 10036</p>
+            </address>
+          </div>
+
+          <div class="contact__block">
+            <h3 class="contact__label">Appointments</h3>
+            <p class="contact__text">By invitation only</p>
+            <a href="mailto:atelier@sashakhan.com" class="contact__link">atelier@sashakhan.com</a>
+          </div>
+
+          <div class="contact__block">
+            <h3 class="contact__label">Press Inquiries</h3>
+            <a href="mailto:press@sashakhan.com" class="contact__link">press@sashakhan.com</a>
+          </div>
+
+          <div class="contact__block">
+            <h3 class="contact__label">Follow</h3>
+            <div class="contact__social">
+              <a href="#" class="contact__social-link" aria-label="Instagram">Instagram</a>
+              <a href="#" class="contact__social-link" aria-label="Pinterest">Pinterest</a>
+              <a href="#" class="contact__social-link" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+
+        <footer class="contact__footer">
+          <p class="contact__copyright">&copy; 2025 Sasha Khan. All rights reserved.</p>
+          <p class="contact__tagline">Crafted with passion in New York City</p>
+        </footer>
+      </div>
+
+    </div>
+  </section>
 
   <!-- Scripts -->
   <script src="src/js/main.js"></script>
-  <script src="src/js/hero.js"></script>
+  <script src="src/js/hero.js?v=5"></script>
+  <script src="src/js/luxury.js?v=3"></script>
+  <script src="src/js/cities.js"></script>
+  <script src="src/js/bags.js"></script>
+  <script src="src/js/products.js"></script>
+  <script src="src/js/catwalk.js"></script>
+  <script src="src/js/glasses.js?v=11"></script>
+  <script src="src/js/graffiti.js"></script>
+  <script src="src/js/contact.js"></script>
 </body>
 </html>

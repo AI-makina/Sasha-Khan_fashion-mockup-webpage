@@ -1,0 +1,468 @@
+/**
+ * Sasha Khan — 20-XXVI-SION Eyewear Collection
+ * Interactive eyewear showcase with carousel, video, and transition controls
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   FIXED NAVIGATION BUTTONS
+   ═══════════════════════════════════════════════════════════ */
+
+.nav-button {
+  position: fixed;
+  top: var(--space-lg);
+  z-index: 9999;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-havana);
+  background: rgba(10, 10, 10, 0.7);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid rgba(196, 167, 125, 0.3);
+  transition: background 0.3s var(--ease-luxury),
+              color 0.3s var(--ease-luxury),
+              border-color 0.3s var(--ease-luxury);
+}
+
+.nav-button:hover {
+  background: rgba(196, 167, 125, 0.9);
+  color: var(--color-noir);
+  border-color: var(--color-havana);
+}
+
+.nav-button--back {
+  left: var(--space-lg);
+}
+
+.nav-button--home {
+  right: var(--space-lg);
+}
+
+@media (max-width: 480px) {
+  .nav-button {
+    font-size: 10px;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .nav-button--back {
+    left: var(--space-md);
+  }
+
+  .nav-button--home {
+    right: var(--space-md);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+
+.xxvi-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.8), transparent);
+  z-index: 100;
+}
+
+.xxvi-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.xxvi-header__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-havana);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.xxvi-header__link:hover {
+  opacity: 0.7;
+}
+
+.xxvi-header__link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.xxvi-header__title {
+  font-family: var(--font-body);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+}
+
+.xxvi-header__logo {
+  opacity: 0.8;
+}
+
+.xxvi-header__spacer {
+  width: 40px;
+  height: 40px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EYEWEAR SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+.eyewear-section {
+  min-height: 100vh;
+  background-color: var(--color-noir);
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LARGE DISPLAY AREA
+   ═══════════════════════════════════════════════════════════ */
+
+.eyewear-display {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.eyewear-display__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.eyewear-display__video,
+.eyewear-display__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  transition: opacity 0.4s ease-out, visibility 0s 0s;
+}
+
+.eyewear-display__video[hidden],
+.eyewear-display__image[hidden] {
+  display: block !important;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.4s ease-out, visibility 0s 0.4s;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTROL BUTTONS
+   ═══════════════════════════════════════════════════════════ */
+
+.eyewear-controls {
+  position: absolute;
+  top: 50%;
+  right: var(--space-xl);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  z-index: 10;
+}
+
+.eyewear-controls__btn {
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--color-havana);
+  color: var(--color-havana);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.eyewear-controls__btn:hover {
+  background: rgba(196, 167, 125, 0.2);
+}
+
+.eyewear-controls__btn[hidden] {
+  display: none;
+}
+
+.eyewear-controls__btn.is-active {
+  background: var(--color-havana);
+  color: var(--color-noir);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   CAROUSEL
+   ═══════════════════════════════════════════════════════════ */
+
+.eyewear-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+  gap: var(--space-md);
+}
+
+.eyewear-carousel__arrow {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid var(--color-havana);
+  color: var(--color-havana);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  flex-shrink: 0;
+}
+
+.eyewear-carousel__arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.eyewear-carousel__arrow:hover {
+  background: rgba(196, 167, 125, 0.1);
+}
+
+.eyewear-carousel__arrow:active {
+  transform: scale(0.95);
+}
+
+.eyewear-carousel__track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  overflow: visible;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.eyewear-carousel__wrapper {
+  overflow: hidden;
+  max-width: 700px;
+  padding: var(--space-md) 0;
+  cursor: grab;
+  user-select: none;
+}
+
+.eyewear-carousel__wrapper:active {
+  cursor: grabbing;
+}
+
+.eyewear-carousel__item {
+  position: relative;
+  flex: 0 0 240px;
+  height: 135px; /* 16:9 ratio */
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  border: 1px solid rgba(196, 167, 125, 0.3);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  opacity: 0.4;
+  transform: scale(0.9);
+}
+
+.eyewear-carousel__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.eyewear-carousel__item.is-active {
+  opacity: 1;
+  border-color: var(--color-havana);
+  transform: scale(1);
+}
+
+.eyewear-carousel__item:hover:not(.is-active) {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+/* Transition Icon (half black/white circle) */
+.eyewear-carousel__transition-icon {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #fff 50%, #000 50%);
+  border: 1px solid rgba(196, 167, 125, 0.5);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FRAME INFO
+   ═══════════════════════════════════════════════════════════ */
+
+.eyewear-info {
+  text-align: center;
+  padding: var(--space-lg) var(--space-xl);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.eyewear-info__name {
+  font-family: var(--font-display);
+  font-size: var(--font-size-2xl);
+  font-weight: 400;
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--space-sm);
+}
+
+.eyewear-info__description {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-light);
+  color: var(--color-ivory);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION DIVIDER
+   ═══════════════════════════════════════════════════════════ */
+
+.eyewear-section:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-havana) 20%, var(--color-havana) 80%, transparent);
+  margin: var(--space-xl) auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .eyewear-display {
+    height: 50vh;
+  }
+
+  .eyewear-controls {
+    right: var(--space-lg);
+  }
+
+  .eyewear-carousel__item {
+    flex: 0 0 200px;
+    height: 112px; /* 16:9 ratio */
+  }
+
+  .eyewear-carousel__track {
+    max-width: 550px;
+  }
+}
+
+@media (max-width: 768px) {
+  .xxvi-header {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .xxvi-header__title {
+    font-size: var(--font-size-base);
+  }
+
+  .eyewear-display {
+    height: 45vh;
+    min-height: 300px;
+  }
+
+  .eyewear-controls {
+    top: auto;
+    bottom: var(--space-lg);
+    right: var(--space-md);
+    transform: none;
+    flex-direction: row;
+  }
+
+  .eyewear-carousel {
+    padding: var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .eyewear-carousel__item {
+    flex: 0 0 160px;
+    height: 90px; /* 16:9 ratio */
+  }
+
+  .eyewear-carousel__track {
+    max-width: 400px;
+    gap: var(--space-sm);
+  }
+
+  .eyewear-carousel__arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .eyewear-carousel__arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .eyewear-info {
+    padding: var(--space-md);
+  }
+
+  .eyewear-info__name {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .eyewear-carousel__item {
+    flex: 0 0 128px;
+    height: 72px; /* 16:9 ratio */
+  }
+
+  .eyewear-carousel__track {
+    max-width: 320px;
+  }
+
+  .eyewear-carousel__transition-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .eyewear-display__video,
+  .eyewear-display__image,
+  .eyewear-carousel__item {
+    transition: none;
+  }
+}

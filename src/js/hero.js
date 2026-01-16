@@ -28,6 +28,13 @@ class HeroVideoController {
    * Initialize event listeners
    */
   init() {
+    // Map link areas to their corresponding triangles
+    this.linkMapping = {
+      'hero-links__area--top': '.hero-triangle--top',
+      'hero-links__area--left': '.hero-triangle--left',
+      'hero-links__area--right': '.hero-triangle--right'
+    };
+
     // Set up video sections
     this.videoSections.forEach(section => {
       const video = section.querySelector('video');
@@ -38,21 +45,54 @@ class HeroVideoController {
       video.pause();
       video.currentTime = 0;
 
-      if (this.isTouch) {
-        // Touch device behavior - toggle on tap
-        section.addEventListener('touchstart', (e) => this.onTouch(e, section, video), { passive: true });
-      } else {
-        // Desktop hover behavior
-        section.addEventListener('mouseenter', () => this.onHover(section, video));
-        section.addEventListener('mouseleave', () => this.onLeave(section, video));
-      }
+      // Set up seamless looping
+      this.setupSeamlessLoop(video);
     });
+
+    // Set up hover behavior on the link overlay areas
+    const linkAreas = document.querySelectorAll('.hero-links__area');
+
+    linkAreas.forEach(linkArea => {
+      // Find corresponding triangle
+      const triangleClass = Object.entries(this.linkMapping)
+        .find(([linkClass]) => linkArea.classList.contains(linkClass))?.[1];
+
+      if (!triangleClass) return;
+
+      const section = document.querySelector(triangleClass);
+      const video = section?.querySelector('video');
+
+      if (!section || !video) return;
+
+      // Always add hover behavior (works on desktop and hybrid devices)
+      linkArea.addEventListener('mouseenter', () => this.onHover(section, video));
+      linkArea.addEventListener('mouseleave', () => this.onLeave(section, video));
+    });
+
+    // Set up hover behavior for bottom triangle (Collections - no video, just dimming)
+    const bottomTriangle = document.querySelector('.hero-triangle--bottom');
+    if (bottomTriangle) {
+      bottomTriangle.addEventListener('mouseenter', () => this.onHoverStatic(bottomTriangle));
+      bottomTriangle.addEventListener('mouseleave', () => this.onLeaveStatic(bottomTriangle));
+    }
+
+    // Setup title parallax effect
+    this.setupTitleParallax();
 
     // Handle keyboard accessibility
     this.setupKeyboardNavigation();
 
     // Handle reduced motion preference
     this.handleReducedMotion();
+  }
+
+  /**
+   * Setup video - H.265 handles seamless looping natively
+   */
+  setupSeamlessLoop(video) {
+    // H.265 with native loop attribute handles this seamlessly
+    // Just ensure preload is set
+    video.preload = 'auto';
   }
 
   /**
@@ -103,44 +143,112 @@ class HeroVideoController {
   }
 
   /**
-   * Handle touch interaction - toggle play/pause
+   * Handle hover on static section (no video) - just dim others
    */
-  onTouch(event, section, video) {
-    // Prevent double-firing
-    event.stopPropagation();
+  onHoverStatic(activeSection) {
+    // Dim all OTHER sections
+    this.allSections.forEach(section => {
+      if (section !== activeSection) {
+        section.classList.add('is-dimmed');
+      }
+    });
 
-    const isPlaying = !video.paused;
+    // Mark active section
+    activeSection.classList.add('is-active');
 
-    if (isPlaying) {
-      // If playing, pause it
-      video.pause();
-      section.classList.remove('is-active');
-      this.allSections.forEach(s => s.classList.remove('is-dimmed'));
-    } else {
-      // Pause all other videos first
-      this.videoSections.forEach(s => {
-        const v = s.querySelector('video');
-        if (v && s !== section) {
-          v.pause();
-          s.classList.remove('is-active');
-        }
+    // Subtle logo dim effect
+    if (this.logo) {
+      this.logo.classList.add('is-dimmed');
+    }
+  }
+
+  /**
+   * Handle mouse leave on static section - remove dimming
+   */
+  onLeaveStatic(activeSection) {
+    // Remove dimming from all sections
+    this.allSections.forEach(section => {
+      section.classList.remove('is-dimmed');
+    });
+
+    // Remove active state
+    activeSection.classList.remove('is-active');
+
+    // Remove logo dim
+    if (this.logo) {
+      this.logo.classList.remove('is-dimmed');
+    }
+  }
+
+  /**
+   * Setup parallax effect on triangle titles
+   */
+  setupTitleParallax() {
+    const parallaxIntensity = 0.03; // Subtle movement
+
+    // Map for link areas to triangles
+    const linkToTriangle = {
+      'hero-links__area--top': '.hero-triangle--top',
+      'hero-links__area--left': '.hero-triangle--left',
+      'hero-links__area--right': '.hero-triangle--right'
+    };
+
+    // Setup parallax for link areas (Freedom, Elite, Glamour)
+    const linkAreas = document.querySelectorAll('.hero-links__area');
+    linkAreas.forEach(linkArea => {
+      const triangleClass = Object.entries(linkToTriangle)
+        .find(([linkClass]) => linkArea.classList.contains(linkClass))?.[1];
+
+      if (!triangleClass) return;
+
+      const triangle = document.querySelector(triangleClass);
+      const title = triangle?.querySelector('.hero-triangle__title');
+
+      if (!title) return;
+
+      linkArea.addEventListener('mousemove', (e) => {
+        const rect = linkArea.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const deltaX = (e.clientX - centerX) * parallaxIntensity;
+        const deltaY = (e.clientY - centerY) * parallaxIntensity;
+
+        requestAnimationFrame(() => {
+          title.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        });
       });
 
-      // Play this video
-      video.play().catch(err => {
-        console.log('Video autoplay prevented:', err);
+      linkArea.addEventListener('mouseleave', () => {
+        requestAnimationFrame(() => {
+          title.style.transform = 'translate(0, 0)';
+        });
+      });
+    });
+
+    // Setup parallax for bottom triangle (Collections)
+    const bottomTriangle = document.querySelector('.hero-triangle--bottom');
+    const bottomTitle = bottomTriangle?.querySelector('.hero-triangle__title');
+
+    if (bottomTriangle && bottomTitle) {
+      bottomTriangle.addEventListener('mousemove', (e) => {
+        const rect = bottomTriangle.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const deltaX = (e.clientX - centerX) * parallaxIntensity;
+        const deltaY = (e.clientY - centerY) * parallaxIntensity;
+
+        requestAnimationFrame(() => {
+          bottomTitle.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        });
       });
 
-      // Dim others
-      this.allSections.forEach(s => {
-        if (s !== section) {
-          s.classList.add('is-dimmed');
-        } else {
-          s.classList.remove('is-dimmed');
-        }
+      bottomTriangle.addEventListener('mouseleave', () => {
+        requestAnimationFrame(() => {
+          bottomTitle.style.transform = 'translate(0, 0)';
+        });
       });
-
-      section.classList.add('is-active');
     }
   }
 

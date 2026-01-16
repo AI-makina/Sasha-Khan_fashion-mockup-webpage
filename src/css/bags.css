@@ -1,0 +1,103 @@
+/**
+ * Sasha Khan — Bags Section Styles
+ * Video intro and bag showcase
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   BAGS INTRO SECTION — Video with horizontal scroll effect
+   ═══════════════════════════════════════════════════════════ */
+
+.bags-intro {
+  position: relative;
+  width: 100%;
+  /* Extra height: 100vh sweep-in + 300vh flip animation + 100vh hold */
+  height: 500vh;
+  background-color: var(--color-noir);
+  /* Note: NO overflow here - sticky requires overflow:visible on ancestors */
+}
+
+.bags-intro__video-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.bags-intro__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BAG SHOWCASE SECTION — Featured Image
+   ═══════════════════════════════════════════════════════════ */
+
+.bag-showcase {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-noir);
+  overflow: hidden;
+
+  /* Initially hidden */
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-luxury);
+}
+
+.bag-showcase.is-visible {
+  opacity: 1;
+}
+
+.bag-showcase__container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+
+.bag-showcase__image {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .bags-intro__video-container {
+    height: 100vh;
+  }
+
+  .bag-showcase__container {
+    height: auto;
+    min-height: 60vh;
+  }
+
+  .bag-showcase__image {
+    max-height: 70vh;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .bag-showcase {
+    opacity: 1;
+    transition: none;
+  }
+}

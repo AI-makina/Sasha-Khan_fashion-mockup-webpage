@@ -1,0 +1,143 @@
+/**
+ * Sasha Khan — Clothing Section Styles
+ * Full-viewport triptych with diagonal dividers
+ * Positioned inside catwalk section, sweeps in from right
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   CLOTHING CONTAINER — Triptych Layout
+   ═══════════════════════════════════════════════════════════ */
+
+.clothing__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 10;
+  background-color: var(--color-noir);
+  /* Start one viewport to the right - gets pulled in with video exit */
+  transform: translateX(100vw);
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLOTHING PANEL — Individual Collection Image
+   ═══════════════════════════════════════════════════════════ */
+
+.clothing-panel {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.clothing-panel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PANEL BUTTONS — Centered Collection Names
+   ═══════════════════════════════════════════════════════════ */
+
+.clothing-panel__btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-havana);
+  color: var(--color-havana);
+  font-family: var(--font-display);
+  font-size: var(--font-size-2xl);
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  padding: var(--space-md) 0;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-smooth);
+  z-index: 10;
+}
+
+.clothing-panel__btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+  border-color: var(--color-havana);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HOVER EFFECT — Dim other panels only on button hover
+   ═══════════════════════════════════════════════════════════ */
+
+/* When any button is hovered, dim all panels */
+.clothing-panel__btn:hover ~ .clothing-panel__image,
+.clothing-panel:has(.clothing-panel__btn:hover) ~ .clothing-panel .clothing-panel__image,
+.clothing-panel:has(~ .clothing-panel .clothing-panel__btn:hover) .clothing-panel__image {
+  opacity: 0.3;
+}
+
+/* The panel with the hovered button stays fully visible */
+.clothing-panel:has(.clothing-panel__btn:hover) .clothing-panel__image {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DIAGONAL DIVIDERS — SVG with Opacity Gradient
+   ═══════════════════════════════════════════════════════════ */
+
+.clothing-dividers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.clothing-dividers line {
+  stroke-width: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .clothing__container {
+    flex-direction: column;
+  }
+
+  .clothing-panel {
+    flex: 1;
+  }
+
+  .clothing-panel__image {
+    object-position: center center;
+  }
+
+  /* Adjust dividers for vertical layout */
+  .clothing-dividers {
+    /* Lines become horizontal on mobile */
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .clothing__container {
+    transform: translateX(0);
+  }
+}

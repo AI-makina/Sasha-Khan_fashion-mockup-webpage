@@ -1,0 +1,304 @@
+/**
+ * Sasha Khan — Contact Section
+ * Elegant contact page with animated video cards
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+.contact {
+  min-height: 100vh;
+  background-color: var(--color-noir);
+  padding: var(--space-lg) 0 var(--space-2xl) 0;
+}
+
+.contact__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   VIDEO CARDS
+   ═══════════════════════════════════════════════════════════ */
+
+.contact__cards {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  margin-bottom: var(--space-lg);
+}
+
+.contact__card {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  overflow: hidden;
+  border: 1px solid rgba(196, 167, 125, 0.3);
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1),
+              opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.contact__card--center {
+  z-index: 3;
+  transform: translateX(0);
+}
+
+.contact__card--left {
+  z-index: 2;
+  opacity: 0;
+  transform: translateX(0);
+}
+
+.contact__card--left.is-animated {
+  opacity: 1;
+  transform: translateX(-320px);
+}
+
+.contact__card--right {
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(0);
+}
+
+.contact__card--right.is-animated {
+  opacity: 1;
+  transform: translateX(320px);
+}
+
+.contact__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT INFO
+   ═══════════════════════════════════════════════════════════ */
+
+.contact__info {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact__header {
+  margin-bottom: var(--space-xl);
+}
+
+.contact__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-widest);
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.contact__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  color: var(--color-ivory);
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--space-md);
+}
+
+.contact__rule {
+  width: 60px;
+  height: 1px;
+  background: var(--color-havana);
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT DETAILS
+   ═══════════════════════════════════════════════════════════ */
+
+.contact__details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-xl) 0;
+  border-top: 1px solid rgba(196, 167, 125, 0.2);
+  border-bottom: 1px solid rgba(196, 167, 125, 0.2);
+}
+
+.contact__block {
+  text-align: center;
+}
+
+.contact__label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+.contact__address {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  color: var(--color-ivory);
+  line-height: 1.8;
+  opacity: 0.9;
+}
+
+.contact__address p {
+  margin: 0;
+}
+
+.contact__text {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--color-ivory);
+  opacity: 0.9;
+  margin-bottom: var(--space-sm);
+}
+
+.contact__link {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--color-havana);
+  text-decoration: none;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.contact__link:hover {
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SOCIAL LINKS
+   ═══════════════════════════════════════════════════════════ */
+
+.contact__social {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.contact__social-link {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--color-ivory);
+  text-decoration: none;
+  opacity: 0.9;
+  transition: color var(--duration-fast) var(--ease-smooth),
+              opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.contact__social-link:hover {
+  color: var(--color-havana);
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+
+.contact__footer {
+  padding-top: var(--space-md);
+}
+
+.contact__copyright {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--color-ivory);
+  opacity: 0.5;
+  margin-bottom: var(--space-sm);
+}
+
+.contact__tagline {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  color: var(--color-havana);
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .contact__cards {
+    height: 450px;
+  }
+
+  .contact__card {
+    width: 250px;
+    height: 350px;
+  }
+
+  .contact__card--left.is-animated {
+    transform: translateX(-270px);
+  }
+
+  .contact__card--right.is-animated {
+    transform: translateX(270px);
+  }
+
+  .contact__details {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .contact {
+    padding: var(--space-xl) 0;
+  }
+
+  .contact__cards {
+    height: 400px;
+  }
+
+  .contact__card {
+    width: 200px;
+    height: 280px;
+  }
+
+  .contact__card--left.is-animated {
+    transform: translateX(-180px);
+  }
+
+  .contact__card--right.is-animated {
+    transform: translateX(180px);
+  }
+
+  .contact__details {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .contact__cards {
+    height: 350px;
+  }
+
+  .contact__card {
+    width: 160px;
+    height: 220px;
+  }
+
+  .contact__card--left.is-animated {
+    transform: translateX(-140px);
+  }
+
+  .contact__card--right.is-animated {
+    transform: translateX(140px);
+  }
+}

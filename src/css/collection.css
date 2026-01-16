@@ -1,0 +1,253 @@
+/**
+ * Sasha Khan — Collection Subpage Styles
+ * Shared styles for individual collection pages
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   COLLECTION HEADER
+   ═══════════════════════════════════════════════════════════ */
+
+.collection-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.9), transparent);
+  z-index: 100;
+}
+
+.collection-header__back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-havana);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.collection-header__back:hover {
+  opacity: 0.7;
+}
+
+.collection-header__back svg {
+  width: 20px;
+  height: 20px;
+}
+
+.collection-header__logo {
+  opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COLLECTION HERO
+   ═══════════════════════════════════════════════════════════ */
+
+.collection-hero {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-noir);
+}
+
+.collection-hero__image-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.collection-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.collection-hero__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-2xl);
+  background-color: var(--color-noir);
+}
+
+.collection-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 400;
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.collection-hero__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-light);
+  color: var(--color-platinum);
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--space-lg);
+}
+
+.collection-hero__divider {
+  width: 100px;
+  height: 1px;
+  background: var(--color-havana);
+  margin-bottom: var(--space-lg);
+}
+
+.collection-hero__description {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-light);
+  color: var(--color-ivory);
+  line-height: 1.8;
+  max-width: 500px;
+  opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COLLECTION GALLERY
+   ═══════════════════════════════════════════════════════════ */
+
+.collection-gallery {
+  padding: var(--space-2xl) var(--space-lg);
+  background-color: var(--color-noir);
+}
+
+.collection-gallery__title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-3xl);
+  font-weight: 400;
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.collection-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.collection-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.collection-item__image-wrapper {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.collection-item__image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform var(--duration-slow) var(--ease-smooth);
+}
+
+.collection-item:hover .collection-item__image-wrapper img {
+  transform: scale(1.05);
+}
+
+.collection-item__info {
+  padding: var(--space-md) 0;
+  text-align: center;
+}
+
+.collection-item__name {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ivory);
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--space-xs);
+}
+
+.collection-item__price {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-light);
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wider);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COLLECTION FOOTER
+   ═══════════════════════════════════════════════════════════ */
+
+.collection-footer {
+  padding: var(--space-xl) var(--space-lg);
+  background-color: var(--color-noir);
+  border-top: 1px solid rgba(196, 167, 125, 0.2);
+  text-align: center;
+}
+
+.collection-footer p {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  color: var(--color-platinum);
+  letter-spacing: var(--letter-spacing-wider);
+  opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .collection-gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-hero {
+    flex-direction: column;
+  }
+
+  .collection-hero__image-container {
+    height: 60vh;
+  }
+
+  .collection-hero__content {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .collection-hero__title {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+
+  .collection-gallery__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-header {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .collection-header__logo {
+    width: 60px;
+    height: 60px;
+  }
+}

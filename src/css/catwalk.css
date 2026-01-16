@@ -1,0 +1,57 @@
+/**
+ * Sasha Khan — Catwalk Section Styles
+ * Horizontal scroll video exit effect (same as keyhole)
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   CATWALK SECTION — Video with horizontal scroll effect
+   ═══════════════════════════════════════════════════════════ */
+
+.catwalk {
+  position: relative;
+  width: 100%;
+  height: 200vh;
+  background-color: var(--color-noir);
+  /* Note: NO overflow here - sticky requires overflow:visible on ancestors */
+}
+
+.catwalk__video-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  /* Sticky also creates positioning context for absolute children */
+}
+
+.catwalk__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, opacity;
+  z-index: 20; /* Video on top - reveals clothing as it exits */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .catwalk__video-container {
+    height: 100vh;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .catwalk__video {
+    transform: none !important;
+  }
+}

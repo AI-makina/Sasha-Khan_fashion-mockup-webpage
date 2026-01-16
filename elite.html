@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sasha Khan — Elite Collection. Refined power dressing for the modern woman.">
+  <meta name="theme-color" content="#0A0A0A">
+
+  <title>Elite Collection — Sasha Khan</title>
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&family=Cinzel:wght@400;500;600&family=Poiret+One&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="src/css/variables.css?v=3">
+  <link rel="stylesheet" href="src/css/main.css?v=8">
+  <link rel="stylesheet" href="src/css/outfit-builder.css?v=5">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo/sasha-khan-logo.png">
+</head>
+<body>
+  <!-- Fixed Navigation Buttons -->
+  <a href="index.html#clothing-section" class="nav-button nav-button--back" aria-label="Back to collections">BACK</a>
+  <a href="index.html" class="nav-button nav-button--home" aria-label="Return to home">HOME</a>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════════ -->
+  <header class="outfit-header">
+    <div class="outfit-header__spacer"></div>
+    <h1 class="outfit-header__title">Elite</h1>
+    <img class="outfit-header__logo" src="assets/logo/sasha-khan-logo.png" alt="Sasha Khan" width="60" height="60">
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ELITE OUTFIT BUILDER - Swipe Carousel with Color Variants
+       ═══════════════════════════════════════════════════════════ -->
+  <main class="outfit-builder outfit-builder--single">
+
+    <!-- LEFT SIDE: Single Carousel with Swipe -->
+    <div class="outfit-builder__selectors outfit-builder__selectors--single">
+
+      <!-- Instruction Text -->
+      <p class="outfit-builder__hint">Swipe or use arrows to browse • Click to select</p>
+
+      <!-- OUTFITS Carousel -->
+      <div class="outfit-carousel outfit-carousel--large outfit-carousel--swipeable" data-type="outfits">
+        <div class="outfit-carousel__header">
+          <span class="outfit-carousel__label">Outfits</span>
+        </div>
+        <div class="outfit-carousel__container">
+          <button class="outfit-carousel__arrow outfit-carousel__arrow--prev" aria-label="Previous outfit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <div class="outfit-carousel__item outfit-carousel__item--large outfit-carousel__item--clickable">
+            <img class="outfit-carousel__image" src="" alt="Outfit">
+            <button class="outfit-carousel__details-btn" aria-label="View details">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </button>
+            <!-- Click indicator overlay -->
+            <div class="outfit-carousel__click-hint">Click to select</div>
+          </div>
+          <button class="outfit-carousel__arrow outfit-carousel__arrow--next" aria-label="Next outfit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+        <p class="outfit-carousel__name"></p>
+
+        <!-- Color Swatches (only visible for items with color variants) -->
+        <div class="outfit-carousel__colors" hidden>
+          <button class="outfit-carousel__color-swatch" data-color="black" style="background-color: #1a1a1a;" aria-label="Black"></button>
+          <button class="outfit-carousel__color-swatch" data-color="pink" style="background-color: #e8a0b0;" aria-label="Pink"></button>
+          <button class="outfit-carousel__color-swatch" data-color="yellow" style="background-color: #e8d070;" aria-label="Yellow"></button>
+        </div>
+      </div>
+
+      <!-- Description Card -->
+      <div class="outfit-description" hidden>
+        <button class="outfit-description__close" aria-label="Close details">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <h3 class="outfit-description__title"></h3>
+        <p class="outfit-description__text"></p>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE: Full Image Display -->
+    <div class="outfit-builder__preview">
+      <div class="outfit-preview">
+        <img class="outfit-preview__image" src="" alt="Outfit preview">
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="src/js/outfit-builder-elite.js"></script>
+</body>
+</html>

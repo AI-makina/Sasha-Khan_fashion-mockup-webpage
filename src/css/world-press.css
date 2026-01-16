@@ -1,0 +1,437 @@
+/**
+ * Sasha Khan — World Press Section
+ * Editorial Magazine Layout — Vogue/Harper's Bazaar Aesthetic
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION BASE
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg,
+    var(--color-noir) 0%,
+    #0d0d0d 50%,
+    var(--color-noir) 100%
+  );
+  padding: var(--space-md) 0;
+  overflow: hidden;
+}
+
+/* Subtle texture overlay */
+.world-press::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.world-press__container {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EDITORIAL HEADER
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.world-press__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-havana);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.world-press__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-ivory);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-md);
+}
+
+.world-press__rule {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--color-havana) 20%,
+    var(--color-havana) 80%,
+    transparent
+  );
+  margin: 0 auto;
+}
+
+.world-press__rule--wide {
+  width: 100%;
+  max-width: 600px;
+  margin: var(--space-md) auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EDITORIAL GRID LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__editorial {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+.world-press__column--text {
+  max-width: 500px;
+}
+
+.world-press__column--hero {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.world-press__figure--hero {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY — Body Text
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__paragraph {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-light);
+  color: var(--color-ivory);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-md);
+  opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DROP CAP
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__paragraph--dropcap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 0.8;
+  color: var(--color-havana);
+  padding-right: var(--space-sm);
+  padding-top: 0.1em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY — Locations (Bold/Caps)
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__location {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ivory);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY — Publication Names (Italic)
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__publication {
+  font-style: italic;
+  color: var(--color-havana);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PULL QUOTE
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__pullquote {
+  position: relative;
+  text-align: center;
+  padding: var(--space-md) var(--space-md);
+  margin: var(--space-md) 0;
+  border-top: 1px solid rgba(196, 167, 125, 0.3);
+  border-bottom: 1px solid rgba(196, 167, 125, 0.3);
+}
+
+.world-press__quote-mark {
+  position: absolute;
+  top: -0.3em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-style: italic;
+  color: var(--color-havana);
+  opacity: 0.3;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.world-press__pullquote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-ivory);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-sm);
+}
+
+.world-press__pullquote cite {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  font-weight: var(--font-weight-light);
+  color: var(--color-havana);
+  letter-spacing: 0.1em;
+}
+
+.world-press__pullquote cite em {
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   IMAGE FRAMES — Editorial Style
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__figure {
+  position: relative;
+  margin: 0;
+}
+
+.world-press__figure--hero .world-press__image-frame {
+  display: inline-flex;
+}
+
+.world-press__figure--hero .world-press__image-frame img {
+  height: auto;
+  max-height: 475px;
+  width: auto;
+  object-fit: contain;
+}
+
+.world-press__image-frame {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+}
+
+/* Subtle frame border */
+.world-press__image-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(196, 167, 125, 0.2);
+  z-index: 2;
+  pointer-events: none;
+  transition: border-color var(--duration-normal) var(--ease-smooth);
+}
+
+.world-press__image-frame:hover::before {
+  border-color: rgba(196, 167, 125, 0.5);
+}
+
+.world-press__image-frame img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform var(--duration-slow) var(--ease-smooth);
+}
+
+.world-press__image-frame:hover img {
+  transform: scale(1.02);
+}
+
+/* Offset frame styling for asymmetry */
+.world-press__image-frame--offset {
+  max-width: 100%;
+  margin-left: auto;
+}
+
+.world-press__image-frame--offset::after {
+  content: '';
+  position: absolute;
+  top: var(--space-sm);
+  left: calc(var(--space-sm) * -1);
+  right: calc(var(--space-sm) * -1);
+  bottom: calc(var(--space-sm) * -1);
+  border: 1px solid rgba(196, 167, 125, 0.15);
+  z-index: -1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FIGURE CAPTIONS
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__figcaption {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  color: var(--color-platinum);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: var(--space-sm);
+  padding-left: var(--space-sm);
+  border-left: 2px solid var(--color-havana);
+}
+
+.world-press__figcaption em {
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECONDARY SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__secondary {
+  display: none; /* Hidden to fit in viewport */
+}
+
+.world-press__figure--secondary {
+  margin-bottom: var(--space-md);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLOSING TAGLINE
+   ═══════════════════════════════════════════════════════════ */
+
+.world-press__closing {
+  text-align: center;
+  padding-top: var(--space-sm);
+}
+
+.world-press__tagline {
+  font-family: var(--font-display);
+  font-size: var(--font-size-lg);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-havana);
+  letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .world-press__container {
+    padding: 0 var(--space-lg);
+  }
+
+  .world-press__editorial {
+    gap: var(--space-xl);
+  }
+
+  .world-press__column--text {
+    padding-right: var(--space-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .world-press {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+
+  .world-press__container {
+    padding: 0 var(--space-md);
+  }
+
+  .world-press__editorial {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .world-press__column--text {
+    padding-right: 0;
+    order: 2;
+  }
+
+  .world-press__column--hero {
+    order: 1;
+  }
+
+  .world-press__paragraph--dropcap::first-letter {
+    font-size: 4rem;
+  }
+
+  .world-press__pullquote {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .world-press__quote-mark {
+    font-size: 5rem;
+  }
+
+  .world-press__image-frame--offset {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .world-press__image-frame--offset::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .world-press__title {
+    font-size: 2.5rem;
+  }
+
+  .world-press__paragraph--dropcap::first-letter {
+    font-size: 3.5rem;
+    padding-right: var(--space-sm);
+  }
+
+  .world-press__pullquote p {
+    font-size: 1.25rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .world-press__image-frame img {
+    transition: none;
+  }
+
+  .world-press__image-frame::before {
+    transition: none;
+  }
+}

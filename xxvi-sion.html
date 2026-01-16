@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>20-XXVI-SION | Sasha Khan Eyewear</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Bebas+Neue&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="src/css/variables.css">
+  <link rel="stylesheet" href="src/css/main.css">
+  <link rel="stylesheet" href="src/css/xxvi-sion.css?v=6">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo/sasha-khan-logo.png">
+</head>
+<body>
+  <!-- Fixed Navigation Buttons -->
+  <a href="index.html#glasses-section" class="nav-button nav-button--back" aria-label="Back to glasses section">BACK</a>
+  <a href="index.html" class="nav-button nav-button--home" aria-label="Return to home">HOME</a>
+
+  <!-- Header -->
+  <header class="xxvi-header">
+    <div class="xxvi-header__spacer"></div>
+    <h1 class="xxvi-header__title">20-XXVI-SION</h1>
+    <img src="assets/logo/sasha-khan-logo.png" alt="Sasha Khan" class="xxvi-header__logo" width="40" height="40">
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BIANCA SECTION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="eyewear-section" id="bianca-section" data-model="bianca">
+    <!-- Large Display Area -->
+    <div class="eyewear-display">
+      <div class="eyewear-display__media">
+        <!-- Default: Transition video for Frame 1 -->
+        <video
+          class="eyewear-display__video eyewear-display__transition-video"
+          muted
+          playsinline
+          preload="auto"
+        >
+          <source src="assets/videos/glasses/bianca/Frame_1_Polarize transition_Bianca.mp4" type="video/mp4">
+        </video>
+        <!-- Model video (plays on Model button click) -->
+        <video
+          class="eyewear-display__video eyewear-display__model-video"
+          muted
+          playsinline
+          preload="auto"
+          hidden
+        >
+        </video>
+        <!-- Frame modeling image -->
+        <img
+          class="eyewear-display__image"
+          src="assets/images/glasses/bianca/frame_modeling/Frame_1_Bianca.png"
+          alt="Bianca Frame 1"
+          hidden
+        >
+      </div>
+
+      <!-- Control Buttons -->
+      <div class="eyewear-controls">
+        <button class="eyewear-controls__btn eyewear-controls__btn--transition">Transition</button>
+        <button class="eyewear-controls__btn eyewear-controls__btn--model" hidden>Model</button>
+        <button class="eyewear-controls__btn eyewear-controls__btn--clear" hidden>Clear</button>
+        <button class="eyewear-controls__btn eyewear-controls__btn--view">View</button>
+      </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="eyewear-carousel">
+      <button class="eyewear-carousel__arrow eyewear-carousel__arrow--prev">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <div class="eyewear-carousel__wrapper">
+        <div class="eyewear-carousel__track">
+          <!-- Frame 1 - Transition (special icon) -->
+          <div class="eyewear-carousel__item" data-frame="1" data-has-transition="true">
+            <img src="assets/images/glasses/bianca/frames/Frame_1.png" alt="Frame 1">
+            <div class="eyewear-carousel__transition-icon"></div>
+          </div>
+          <!-- Frame 2 -->
+          <div class="eyewear-carousel__item" data-frame="2">
+            <img src="assets/images/glasses/bianca/frames/Frames_2.png" alt="Frame 2">
+          </div>
+          <!-- Frame 3 -->
+          <div class="eyewear-carousel__item" data-frame="3">
+            <img src="assets/images/glasses/bianca/frames/Frames_3.png" alt="Frame 3">
+          </div>
+          <!-- Frame 4 -->
+          <div class="eyewear-carousel__item" data-frame="4">
+            <img src="assets/images/glasses/bianca/frames/Frames_4.png" alt="Frame 4">
+          </div>
+          <!-- Frame 5 -->
+          <div class="eyewear-carousel__item" data-frame="5">
+            <img src="assets/images/glasses/bianca/frames/Frames_5.png" alt="Frame 5">
+          </div>
+          <!-- Frame 6 -->
+          <div class="eyewear-carousel__item" data-frame="6">
+            <img src="assets/images/glasses/bianca/frames/Frames_6.png" alt="Frame 6">
+          </div>
+          <!-- Frame 7 -->
+          <div class="eyewear-carousel__item" data-frame="7">
+            <img src="assets/images/glasses/bianca/frames/Frames_7.png" alt="Frame 7">
+          </div>
+        </div>
+      </div>
+
+      <button class="eyewear-carousel__arrow eyewear-carousel__arrow--next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Frame Info -->
+    <div class="eyewear-info">
+      <h3 class="eyewear-info__name">Soleil Transition</h3>
+      <p class="eyewear-info__description">A refined clear frame equipped with advanced transition lenses that adapt smoothly to changing light. Lightweight construction and elegant curves blend innovation with understated luxury.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       KAT SECTION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="eyewear-section" id="kat-section" data-model="kat">
+    <!-- Large Display Area -->
+    <div class="eyewear-display">
+      <div class="eyewear-display__media">
+        <!-- Default: Transition video for Frame 1 -->
+        <video
+          class="eyewear-display__video eyewear-display__transition-video"
+          muted
+          playsinline
+          preload="auto"
+        >
+          <source src="assets/videos/glasses/kat/Frames_1_Polarized transition_Kat.mp4" type="video/mp4">
+        </video>
+        <!-- Model video (plays on Model button click) -->
+        <video
+          class="eyewear-display__video eyewear-display__model-video"
+          muted
+          playsinline
+          preload="auto"
+          hidden
+        >
+        </video>
+        <!-- Frame modeling image -->
+        <img
+          class="eyewear-display__image"
+          src="assets/images/glasses/kat/frame_modeling/Frames_1_Kat.png"
+          alt="Kat Frame 1"
+          hidden
+        >
+      </div>
+
+      <!-- Control Buttons -->
+      <div class="eyewear-controls">
+        <button class="eyewear-controls__btn eyewear-controls__btn--transition">Transition</button>
+        <button class="eyewear-controls__btn eyewear-controls__btn--model" hidden>Model</button>
+        <button class="eyewear-controls__btn eyewear-controls__btn--clear" hidden>Clear</button>
+        <button class="eyewear-controls__btn eyewear-controls__btn--view">View</button>
+      </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="eyewear-carousel">
+      <button class="eyewear-carousel__arrow eyewear-carousel__arrow--prev">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <div class="eyewear-carousel__wrapper">
+        <div class="eyewear-carousel__track">
+          <!-- Frame 1 - Transition (special icon) -->
+          <div class="eyewear-carousel__item" data-frame="1" data-has-transition="true">
+            <img src="assets/images/glasses/kat/frames/Frame_1.png" alt="Frame 1">
+            <div class="eyewear-carousel__transition-icon"></div>
+          </div>
+          <!-- Frame 2 -->
+          <div class="eyewear-carousel__item" data-frame="2">
+            <img src="assets/images/glasses/kat/frames/Frame_2.png" alt="Frame 2">
+          </div>
+          <!-- Frame 3 -->
+          <div class="eyewear-carousel__item" data-frame="3">
+            <img src="assets/images/glasses/kat/frames/Frame_3.png" alt="Frame 3">
+          </div>
+          <!-- Frame 4 -->
+          <div class="eyewear-carousel__item" data-frame="4">
+            <img src="assets/images/glasses/kat/frames/Frame_4.png" alt="Frame 4">
+          </div>
+          <!-- Frame 5 -->
+          <div class="eyewear-carousel__item" data-frame="5">
+            <img src="assets/images/glasses/kat/frames/Frame_5.png" alt="Frame 5">
+          </div>
+          <!-- Frame 6 -->
+          <div class="eyewear-carousel__item" data-frame="6">
+            <img src="assets/images/glasses/kat/frames/Frame_6.png" alt="Frame 6">
+          </div>
+          <!-- Frame 7 -->
+          <div class="eyewear-carousel__item" data-frame="7">
+            <img src="assets/images/glasses/kat/frames/Frame_7.png" alt="Frame 7">
+          </div>
+        </div>
+      </div>
+
+      <button class="eyewear-carousel__arrow eyewear-carousel__arrow--next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Frame Info -->
+    <div class="eyewear-info">
+      <h3 class="eyewear-info__name">Éclipse Clear</h3>
+      <p class="eyewear-info__description">A sculpted clear acetate frame paired with adaptive transition lenses that shift seamlessly from indoor clarity to outdoor protection. Clean geometry and technical refinement create an effortlessly modern essential.</p>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="src/js/xxvi-sion.js?v=3"></script>
+</body>
+</html>

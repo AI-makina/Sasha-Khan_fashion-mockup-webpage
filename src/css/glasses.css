@@ -1,0 +1,121 @@
+/**
+ * Sasha Khan — Glasses Section Styles
+ * Scroll-driven video playback
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   GLASSES SECTION — Scroll-driven video
+   ═══════════════════════════════════════════════════════════ */
+
+.glasses {
+  position: relative;
+  width: 100%;
+  height: 200vh; /* 100vh viewport + 100vh scroll range */
+  background-color: var(--color-noir);
+}
+
+.glasses__video-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.glasses__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OVERLAY LINK — Clickable text overlay
+   ═══════════════════════════════════════════════════════════ */
+
+.glasses__overlay-link {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  text-decoration: none;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.glasses__overlay-link.is-visible {
+  pointer-events: auto;
+}
+
+.glasses__overlay-text {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 25px 0;
+  cursor: pointer;
+}
+
+/* Animated lines on hover */
+.glasses__overlay-text::before,
+.glasses__overlay-text::after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  background-color: #C4A77D;
+  transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Top line - starts from right, sweeps to left */
+.glasses__overlay-text::before {
+  top: 0;
+  right: 0;
+  width: 0;
+}
+
+/* Bottom line - starts from left, sweeps to right */
+.glasses__overlay-text::after {
+  bottom: 0;
+  left: 0;
+  width: 0;
+}
+
+.glasses__overlay-link.is-visible:hover .glasses__overlay-text::before {
+  width: 100%;
+}
+
+.glasses__overlay-link.is-visible:hover .glasses__overlay-text::after {
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .glasses__video-container {
+    height: 100vh;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .glasses__video {
+    /* Video will still be controlled by scroll but without smooth seeking */
+  }
+}

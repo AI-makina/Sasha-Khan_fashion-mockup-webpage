@@ -1,0 +1,417 @@
+/**
+ * Sasha Khan — Product Cards Styles
+ * Horizontal strips with enlarged product images and diagonal gradients
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   PRODUCTS CONTAINER — Right side, aligned with LUX cards
+   ═══════════════════════════════════════════════════════════ */
+
+.products-container {
+  position: absolute;
+  top: 5vh;
+  left: calc(var(--space-xs) + 28vw); /* Position after LUX cards */
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Same gap as LUX cards */
+  z-index: 10;
+  height: 90vh; /* Same height as LUX cards container */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRODUCT CARD — Horizontal strip with enlarged image
+   ═══════════════════════════════════════════════════════════ */
+
+.product-card {
+  flex: 1;
+  position: relative;
+  overflow: hidden; /* Mask top/bottom overflow */
+
+  /* Background image - enlarged, centered on product */
+  background-size: auto 250%; /* Enlarge so purse fills height */
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  /* Initial state for animation - starts off-screen right, invisible */
+  transform: translateX(100%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DIAGONAL GRADIENTS — Fade to black from sides
+   ═══════════════════════════════════════════════════════════ */
+
+/* Left diagonal gradient */
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    var(--color-noir) 0%,
+    rgba(10, 10, 10, 0.95) 15%,
+    rgba(10, 10, 10, 0.8) 30%,
+    rgba(10, 10, 10, 0.5) 50%,
+    transparent 70%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Right diagonal gradient */
+.product-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    255deg,
+    var(--color-noir) 0%,
+    rgba(10, 10, 10, 0.95) 15%,
+    rgba(10, 10, 10, 0.8) 30%,
+    rgba(10, 10, 10, 0.5) 50%,
+    transparent 70%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LUX PRODUCTS — Visible initially, exit during flip
+   ═══════════════════════════════════════════════════════════ */
+
+/* Individual LUX card backgrounds */
+.product-card--lune {
+  background-image: url('../../assets/images/bags/lune.png');
+}
+
+.product-card--ulysse {
+  background-image: url('../../assets/images/bags/ulysse.png');
+  background-position: center 65%;
+}
+
+.product-card--xeline {
+  background-image: url('../../assets/images/bags/xeline.png');
+  background-position: calc(50% + 50px) center; /* Shift 50px right from center */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ODE PRODUCTS — Hidden initially, enter during flip
+   ═══════════════════════════════════════════════════════════ */
+
+.products-container--ode {
+  pointer-events: none; /* Don't block clicks when hidden */
+}
+
+.products-container--ode .product-card {
+  transform: translateX(-100%); /* Start off-screen left */
+  opacity: 0;
+}
+
+/* Enable pointer events when ODE products are visible */
+.products-container--ode .product-card[style*="opacity: 1"],
+.products-container--ode .product-card[style*="opacity:1"] {
+  pointer-events: auto;
+}
+
+/* Individual ODE card backgrounds */
+.product-card--oriane {
+  background-image: url('../../assets/images/bags/ode/oriane.png');
+}
+
+.product-card--diane {
+  background-image: url('../../assets/images/bags/ode/diane.png');
+  background-position: center 80%;
+}
+
+.product-card--elise {
+  background-image: url('../../assets/images/bags/ode/elise.png');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRODUCT NAME — Positioned on right side of card
+   ═══════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════
+   PRODUCT INFO CONTAINER — Name and button wrapper
+   ═══════════════════════════════════════════════════════════ */
+
+.product-card__info {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  z-index: 5;
+  max-width: 20vw;
+}
+
+.product-card__name {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DETAIL BUTTON — Elegant minimal style
+   ═══════════════════════════════════════════════════════════ */
+
+.product-card__detail-btn {
+  background: transparent;
+  border: 1px solid var(--color-havana);
+  color: var(--color-havana);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-smooth);
+  white-space: nowrap;
+}
+
+.product-card__detail-btn:hover {
+  background: var(--color-havana);
+  color: var(--color-noir);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRODUCT MODAL — Full-screen overlay with image left, text right
+   ═══════════════════════════════════════════════════════════ */
+
+.product-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-slow) var(--ease-luxury),
+              visibility var(--duration-slow) var(--ease-luxury);
+}
+
+.product-modal.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.product-modal__content {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  max-height: 800px;
+  background: var(--color-noir);
+  border: 1px solid rgba(196, 167, 125, 0.3);
+  position: relative;
+}
+
+.product-modal__close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: none;
+  border: none;
+  color: var(--color-platinum);
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  line-height: 1;
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+
+.product-modal__close:hover {
+  color: var(--color-champagne-gold);
+}
+
+.product-modal__image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  overflow: hidden;
+}
+
+.product-modal__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Elise modal - shift model image up */
+#modal-elise .product-modal__image img {
+  transform: translateY(-15%);
+}
+
+.product-modal__details {
+  flex: 1;
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.product-modal__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-4xl);
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--space-xs);
+}
+
+.product-modal__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--color-platinum);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  margin-bottom: var(--space-lg);
+}
+
+.product-modal__section {
+  margin-bottom: var(--space-lg);
+}
+
+.product-modal__section h4 {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-havana);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.product-modal__section p {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-light);
+  color: var(--color-ivory);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .products-container {
+    left: calc(var(--space-xs) + 32vw);
+  }
+
+  .product-card {
+    background-size: auto 220%;
+  }
+
+  .product-modal__content {
+    width: 95%;
+    height: 90vh;
+  }
+
+  .product-modal__details {
+    padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    left: calc(var(--space-xs) + 35vw);
+    height: 85vh;
+  }
+
+  .product-card {
+    background-size: auto 200%;
+  }
+
+  .product-card__info {
+    right: 3%;
+  }
+
+  .product-card__detail-btn {
+    font-size: 0.65rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .product-modal__content {
+    flex-direction: column;
+    height: 95vh;
+    max-height: none;
+  }
+
+  .product-modal__image {
+    flex: 0 0 50%;
+    max-height: 50%;
+  }
+
+  .product-modal__details {
+    flex: 1;
+    padding: var(--space-md);
+  }
+
+  .product-modal__title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .products-container {
+    left: calc(var(--space-xs) + 30vw);
+    height: 80vh;
+  }
+
+  .product-card {
+    background-size: auto 180%;
+  }
+
+  .product-card__name {
+    max-height: 40%;
+  }
+
+  .product-modal__image {
+    flex: 0 0 40%;
+    max-height: 40%;
+  }
+
+  .product-modal__details {
+    padding: var(--space-sm);
+  }
+
+  .product-modal__title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .product-modal__section p {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card {
+    transform: translateX(0);
+  }
+}

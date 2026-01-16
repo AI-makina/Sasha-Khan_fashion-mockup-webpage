@@ -1,0 +1,215 @@
+/**
+ * Sasha Khan — LUX to ODE Transition Styles
+ * Scroll-driven card flip with coordinated bag sweeps
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   TRANSITION SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+.lux-ode-transition {
+  position: relative;
+  width: 100%;
+  height: 400vh;
+  background-color: var(--color-noir);
+}
+
+.transition-sticky-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLIP CARDS CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+
+.flip-cards-container {
+  position: absolute;
+  left: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 90vh;
+  z-index: 10;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INDIVIDUAL FLIP CARD
+   ═══════════════════════════════════════════════════════════ */
+
+.flip-card {
+  flex: 1;
+  width: auto;
+  height: calc((90vh - 2 * 4px) / 3);
+  aspect-ratio: 16 / 9;
+  perspective: 2000px;
+}
+
+.flip-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.1s linear;
+}
+
+.flip-card__face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.flip-card__face--front {
+  z-index: 2;
+}
+
+.flip-card__face--back {
+  transform: rotateY(180deg);
+}
+
+.flip-card__model {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SWEEP BAGS CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+
+.sweep-bags-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.sweep-bag {
+  position: absolute;
+  right: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  will-change: transform, opacity;
+}
+
+.sweep-bag img:first-child {
+  max-height: 25vh;
+  width: auto;
+  object-fit: contain;
+}
+
+.sweep-bag__name {
+  max-width: 150px;
+  height: auto;
+}
+
+/* Position bags vertically to match cards */
+.sweep-bag[data-index="0"] { top: 8%; }
+.sweep-bag[data-index="1"] { top: 38%; }
+.sweep-bag[data-index="2"] { top: 68%; }
+
+/* LUX bags - visible initially */
+.sweep-bag--lux {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ODE bags - hidden initially, off to the left */
+.sweep-bag--ode {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .sweep-bag img:first-child {
+    max-height: 22vh;
+  }
+
+  .sweep-bag__name {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .flip-cards-container {
+    height: 85vh;
+  }
+
+  .flip-card {
+    height: calc((85vh - 2 * 4px) / 3);
+  }
+
+  .sweep-bag img:first-child {
+    max-height: 18vh;
+  }
+
+  .sweep-bag__name {
+    max-width: 100px;
+  }
+
+  .sweep-bag[data-index="0"] { top: 10%; }
+  .sweep-bag[data-index="1"] { top: 40%; }
+  .sweep-bag[data-index="2"] { top: 70%; }
+}
+
+@media (max-width: 480px) {
+  .flip-cards-container {
+    height: 80vh;
+  }
+
+  .flip-card {
+    height: calc((80vh - 2 * 4px) / 3);
+  }
+
+  .sweep-bag {
+    right: 5%;
+  }
+
+  .sweep-bag img:first-child {
+    max-height: 15vh;
+  }
+
+  .sweep-bag__name {
+    max-width: 80px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card__inner {
+    transition: none;
+  }
+
+  .sweep-bag {
+    transition: none;
+  }
+}
