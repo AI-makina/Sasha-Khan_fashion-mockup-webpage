@@ -212,3 +212,15 @@ video {
   color: var(--color-noir);
   border-color: var(--color-havana);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET MENU BUTTON & NAV (hidden by default, shown via responsive.css)
+   ═══════════════════════════════════════════════════════════ */
+
+.menu-button {
+  display: none;
+}
+
+.tablet-nav {
+  display: none;
+}

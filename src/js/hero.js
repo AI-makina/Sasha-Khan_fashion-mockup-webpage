@@ -25,6 +25,13 @@ class HeroVideoController {
   }
 
   /**
+   * Check if viewport is in tablet range (991px - 1200px)
+   */
+  isTabletViewport() {
+    return window.innerWidth >= 991 && window.innerWidth <= 1200;
+  }
+
+  /**
    * Initialize event listeners
    */
   init() {
@@ -64,20 +71,27 @@ class HeroVideoController {
 
       if (!section || !video) return;
 
-      // Always add hover behavior (works on desktop and hybrid devices)
-      linkArea.addEventListener('mouseenter', () => this.onHover(section, video));
-      linkArea.addEventListener('mouseleave', () => this.onLeave(section, video));
+      // Only add hover behavior on desktop (not touch AND not tablet viewport)
+      const shouldAddHover = !this.isTouch && !this.isTabletViewport();
+      if (shouldAddHover) {
+        linkArea.addEventListener('mouseenter', () => this.onHover(section, video));
+        linkArea.addEventListener('mouseleave', () => this.onLeave(section, video));
+      }
     });
 
     // Set up hover behavior for bottom triangle (Collections - no video, just dimming)
+    // Only on desktop (not touch AND not tablet viewport)
     const bottomTriangle = document.querySelector('.hero-triangle--bottom');
-    if (bottomTriangle) {
+    const shouldAddBottomHover = !this.isTouch && !this.isTabletViewport();
+    if (bottomTriangle && shouldAddBottomHover) {
       bottomTriangle.addEventListener('mouseenter', () => this.onHoverStatic(bottomTriangle));
       bottomTriangle.addEventListener('mouseleave', () => this.onLeaveStatic(bottomTriangle));
     }
 
-    // Setup title parallax effect
-    this.setupTitleParallax();
+    // Setup title parallax effect (desktop only)
+    if (!this.isTouch && !this.isTabletViewport()) {
+      this.setupTitleParallax();
+    }
 
     // Handle keyboard accessibility
     this.setupKeyboardNavigation();
@@ -253,9 +267,14 @@ class HeroVideoController {
   }
 
   /**
-   * Setup keyboard navigation for accessibility
+   * Setup keyboard navigation for accessibility (desktop only)
    */
   setupKeyboardNavigation() {
+    // Skip keyboard navigation on tablet to prevent focus-triggered hover states
+    if (this.isTouch || this.isTabletViewport()) {
+      return;
+    }
+
     this.videoSections.forEach((section, index) => {
       const video = section.querySelector('video');
 
@@ -316,13 +335,15 @@ class HeroVideoController {
 
 /**
  * Logo Parallax Effect (subtle)
+ * DISABLED on tablet to prevent layout issues
  */
 class LogoParallax {
   constructor() {
     this.logo = document.querySelector('.hero-logo__image');
     this.intensity = 0.02; // Subtle movement
 
-    if (this.logo && !this.prefersReducedMotion()) {
+    // Skip on tablet viewport (991-1200px) - touch check removed to preserve desktop functionality
+    if (this.logo && !this.prefersReducedMotion() && !this.isTabletViewport()) {
       this.init();
     }
   }
@@ -331,11 +352,18 @@ class LogoParallax {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
+  isTabletViewport() {
+    return window.innerWidth >= 991 && window.innerWidth <= 1200;
+  }
+
   init() {
     document.addEventListener('mousemove', (e) => this.onMouseMove(e));
   }
 
   onMouseMove(e) {
+    // Double-check we're not on tablet (in case of resize)
+    if (this.isTabletViewport()) return;
+
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
@@ -349,11 +377,256 @@ class LogoParallax {
 }
 
 /**
+ * Tablet Landscape Sequence Controller
+ * Plays videos in sequence: Freedom → Elite → Glamour → Collections (5s) → Loop
+ * Only active in tablet landscape viewport (991px - 1200px)
+ */
+class TabletSequenceController {
+  constructor() {
+    this.isRunning = false;
+    this.currentIndex = 0;
+    this.collectionsDisplayTime = 5000; // 5 seconds for Collections image
+    this.sequenceTimer = null;
+
+    // Define the sequence order
+    this.sequence = [
+      { selector: '.hero-triangle--top', type: 'video' },      // Freedom
+      { selector: '.hero-triangle--left', type: 'video' },     // Elite
+      { selector: '.hero-triangle--right', type: 'video' },    // Glamour
+      { selector: '.hero-triangle--bottom', type: 'image' }    // Collections
+    ];
+
+    this.triangles = document.querySelectorAll('.hero-triangle');
+    this.init();
+  }
+
+  /**
+   * Check if viewport is in tablet landscape range (991px - 1200px)
+   */
+  isTabletViewport() {
+    return window.innerWidth >= 991 && window.innerWidth <= 1200;
+  }
+
+  /**
+   * Initialize the controller
+   */
+  init() {
+    // Start sequence if in tablet viewport
+    if (this.isTabletViewport()) {
+      this.startSequence();
+    }
+
+    // Handle viewport resize
+    window.addEventListener('resize', () => this.handleResize());
+
+    // Handle page visibility
+    document.addEventListener('visibilitychange', () => this.handleVisibility());
+  }
+
+  /**
+   * Handle viewport resize
+   */
+  handleResize() {
+    if (this.isTabletViewport() && !this.isRunning) {
+      this.startSequence();
+    } else if (!this.isTabletViewport() && this.isRunning) {
+      this.stopSequence();
+    }
+  }
+
+  /**
+   * Handle page visibility changes
+   */
+  handleVisibility() {
+    if (!this.isTabletViewport()) return;
+
+    if (document.hidden) {
+      this.pauseSequence();
+    } else {
+      this.resumeSequence();
+    }
+  }
+
+  /**
+   * Start the sequence
+   */
+  startSequence() {
+    if (this.isRunning) return;
+
+    this.isRunning = true;
+    document.body.classList.add('tablet-sequence-active');
+
+    // Reset all videos to first frame
+    this.resetAllVideos();
+
+    // Start with the first item (Freedom)
+    this.currentIndex = 0;
+    this.playCurrentItem();
+  }
+
+  /**
+   * Stop the sequence
+   */
+  stopSequence() {
+    this.isRunning = false;
+    document.body.classList.remove('tablet-sequence-active');
+
+    // Clear any pending timers
+    if (this.sequenceTimer) {
+      clearTimeout(this.sequenceTimer);
+      this.sequenceTimer = null;
+    }
+
+    // Remove all states
+    this.triangles.forEach(triangle => {
+      triangle.classList.remove('is-active', 'is-dimmed');
+    });
+
+    // Pause all videos
+    this.pauseAllVideos();
+  }
+
+  /**
+   * Pause the sequence (when tab hidden)
+   */
+  pauseSequence() {
+    if (this.sequenceTimer) {
+      clearTimeout(this.sequenceTimer);
+      this.sequenceTimer = null;
+    }
+
+    // Pause current video if playing
+    const current = this.sequence[this.currentIndex];
+    if (current.type === 'video') {
+      const triangle = document.querySelector(current.selector);
+      const video = triangle?.querySelector('video');
+      if (video) video.pause();
+    }
+  }
+
+  /**
+   * Resume the sequence (when tab visible again)
+   */
+  resumeSequence() {
+    if (!this.isRunning) return;
+
+    const current = this.sequence[this.currentIndex];
+    if (current.type === 'video') {
+      const triangle = document.querySelector(current.selector);
+      const video = triangle?.querySelector('video');
+      if (video) {
+        video.play().catch(err => console.log('Video play prevented:', err));
+      }
+    } else {
+      // For Collections image, restart the timer
+      this.sequenceTimer = setTimeout(() => this.advanceSequence(), this.collectionsDisplayTime);
+    }
+  }
+
+  /**
+   * Play the current item in the sequence
+   */
+  playCurrentItem() {
+    if (!this.isRunning) return;
+
+    const current = this.sequence[this.currentIndex];
+    const currentTriangle = document.querySelector(current.selector);
+
+    if (!currentTriangle) return;
+
+    // Update states: active for current, dimmed for others
+    this.triangles.forEach(triangle => {
+      if (triangle === currentTriangle) {
+        triangle.classList.add('is-active');
+        triangle.classList.remove('is-dimmed');
+      } else {
+        triangle.classList.add('is-dimmed');
+        triangle.classList.remove('is-active');
+      }
+    });
+
+    if (current.type === 'video') {
+      const video = currentTriangle.querySelector('video');
+      if (video) {
+        // Reset to beginning
+        video.currentTime = 0;
+
+        // Remove any existing ended listener
+        video.removeEventListener('ended', this.boundAdvance);
+
+        // Add ended listener
+        this.boundAdvance = () => this.advanceSequence();
+        video.addEventListener('ended', this.boundAdvance, { once: true });
+
+        // Play the video
+        video.play().catch(err => console.log('Video play prevented:', err));
+      }
+    } else {
+      // For Collections image, display for 5 seconds then advance
+      this.sequenceTimer = setTimeout(() => this.advanceSequence(), this.collectionsDisplayTime);
+    }
+  }
+
+  /**
+   * Advance to the next item in the sequence
+   */
+  advanceSequence() {
+    if (!this.isRunning) return;
+
+    // Reset current video to first frame if it's a video
+    const current = this.sequence[this.currentIndex];
+    if (current.type === 'video') {
+      const triangle = document.querySelector(current.selector);
+      const video = triangle?.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+
+    // Move to next item (loop back to 0 after last)
+    this.currentIndex = (this.currentIndex + 1) % this.sequence.length;
+
+    // Play the next item
+    this.playCurrentItem();
+  }
+
+  /**
+   * Reset all videos to first frame
+   */
+  resetAllVideos() {
+    this.sequence.forEach(item => {
+      if (item.type === 'video') {
+        const triangle = document.querySelector(item.selector);
+        const video = triangle?.querySelector('video');
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    });
+  }
+
+  /**
+   * Pause all videos
+   */
+  pauseAllVideos() {
+    document.querySelectorAll('.hero-triangle--video video').forEach(video => {
+      video.pause();
+    });
+  }
+}
+
+/**
  * Initialize on DOM ready
  */
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize video controller
+  // Initialize video controller (handles desktop hover behavior)
   new HeroVideoController();
+
+  // DISABLED: Tablet sequence controller causes layout instability
+  // TODO: Fix TabletSequenceController before re-enabling
+  // new TabletSequenceController();
 
   // Initialize logo parallax
   new LogoParallax();
@@ -363,12 +636,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Handle page visibility - pause videos when tab is hidden
+ * Handle page visibility - pause videos when tab is hidden (desktop fallback)
  */
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
-    document.querySelectorAll('.hero-triangle--video video').forEach(video => {
-      video.pause();
-    });
+    // Only pause if NOT in tablet sequence mode (tablet handles its own visibility)
+    if (!document.body.classList.contains('tablet-sequence-active')) {
+      document.querySelectorAll('.hero-triangle--video video').forEach(video => {
+        video.pause();
+      });
+    }
   }
 });

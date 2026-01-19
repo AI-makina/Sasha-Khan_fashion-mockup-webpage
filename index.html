@@ -23,10 +23,10 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="src/css/variables.css?v=3">
-  <link rel="stylesheet" href="src/css/main.css?v=12">
+  <link rel="stylesheet" href="src/css/main.css?v=13">
   <link rel="stylesheet" href="src/css/hero.css?v=18">
   <link rel="stylesheet" href="src/css/animations.css?v=2">
-  <link rel="stylesheet" href="src/css/responsive.css?v=2">
+  <link rel="stylesheet" href="src/css/responsive.css?v=22">
   <link rel="stylesheet" href="src/css/cities.css?v=3">
   <link rel="stylesheet" href="src/css/luxury.css?v=3">
   <link rel="stylesheet" href="src/css/bags.css?v=3">
@@ -43,6 +43,39 @@
 <body>
   <!-- Fixed Home Button -->
   <a href="#main-content" class="home-button" aria-label="Return to top">HOME</a>
+
+  <!-- Fixed Menu Button (tablet only) -->
+  <button class="menu-button" aria-label="Open collections menu" aria-expanded="false">MENU</button>
+
+  <!-- Tablet Navigation Menu -->
+  <nav class="tablet-nav" aria-label="Tablet collections navigation">
+    <ul class="tablet-nav__list">
+      <li class="tablet-nav__item tablet-nav__item--has-submenu">
+        <span class="tablet-nav__label">Carries</span>
+        <ul class="tablet-nav__submenu">
+          <li><a href="#" class="tablet-nav__link" data-scroll-target="lux">LUX</a></li>
+          <li><a href="#" class="tablet-nav__link" data-scroll-target="ode">ODE</a></li>
+        </ul>
+      </li>
+      <li class="tablet-nav__item tablet-nav__item--has-submenu">
+        <span class="tablet-nav__label">Outwear</span>
+        <ul class="tablet-nav__submenu">
+          <li><a href="elite.html" class="tablet-nav__link">ELITE</a></li>
+          <li><a href="freedom.html" class="tablet-nav__link">FREEDOM</a></li>
+          <li><a href="glamour.html" class="tablet-nav__link">GLAMOUR</a></li>
+        </ul>
+      </li>
+      <li class="tablet-nav__item">
+        <a href="xxvi-sion.html" class="tablet-nav__label tablet-nav__label--link">Eyewear</a>
+      </li>
+      <li class="tablet-nav__item">
+        <a href="#world-press-section" class="tablet-nav__label tablet-nav__label--link">Press</a>
+      </li>
+      <li class="tablet-nav__item">
+        <a href="#contact-section" class="tablet-nav__label tablet-nav__label--link">Contact</a>
+      </li>
+    </ul>
+  </nav>
 
   <!-- Skip to main content link for accessibility -->
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
@@ -795,8 +828,8 @@
   </section>
 
   <!-- Scripts -->
-  <script src="src/js/main.js"></script>
-  <script src="src/js/hero.js?v=5"></script>
+  <script src="src/js/main.js?v=6"></script>
+  <script src="src/js/hero.js?v=10"></script>
   <script src="src/js/luxury.js?v=9"></script>
   <script src="src/js/cities.js"></script>
   <script src="src/js/bags.js"></script>

@@ -260,6 +260,240 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   TABLET LANDSCAPE
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 991px) and (max-width: 1200px) {
+  /* ═══════════════════════════════════════════════════════════
+     TABLET LANDSCAPE - DOCUMENTED FIXES ONLY
+     Based on: ISSUE_0006_Image breaking hero section on tablet
+     ═══════════════════════════════════════════════════════════ */
+
+  /* 1. Disable ALL transitions on triangle elements */
+  .hero-triangle,
+  .hero-triangle *,
+  .hero-triangle__title,
+  .hero-triangle__overlay,
+  .hero-triangle__video,
+  .hero-triangle__image {
+    transition: none !important;
+  }
+
+  /* 2. Hide overlay completely */
+  .hero-triangle__overlay {
+    display: none !important;
+  }
+
+  /* 3. Force stable state on ALL triangles regardless of classes */
+  .hero-triangle,
+  .hero-triangle.is-dimmed,
+  .hero-triangle.is-active {
+    opacity: 1 !important;
+    filter: none !important;
+    z-index: 2 !important;
+  }
+
+  /* Reset titles */
+  .hero-triangle__title,
+  .hero-triangle.is-dimmed .hero-triangle__title,
+  .hero-triangle.is-active .hero-triangle__title {
+    opacity: 1 !important;
+  }
+
+  /* 4. Explicit overrides for :hover, :active, :focus on bottom triangle */
+  .hero-triangle--bottom,
+  .hero-triangle--bottom:hover,
+  .hero-triangle--bottom:active,
+  .hero-triangle--bottom:focus {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    z-index: 2 !important;
+  }
+
+  /* 5. Completely hide collections menu with zero dimensions */
+  .collections-menu,
+  .collections-menu *,
+  .hero-triangle--bottom:hover .collections-menu,
+  .hero-triangle--bottom.is-active .collections-menu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* FREEDOM (top) triangle video - shift up 2% */
+  .hero-triangle--top .hero-triangle__video,
+  .hero-triangle--top .hero-triangle__image {
+    transform: translateY(-2%) !important;
+  }
+
+  /* ELITE (left) triangle video - enlarge to fill corner gaps */
+  .hero-triangle--left .hero-triangle__video,
+  .hero-triangle--left .hero-triangle__image {
+    max-width: none !important;
+    width: 130% !important;
+    height: 130% !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -45%) translateX(-39%) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     TABLET MENU BUTTON & NAV
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Force both buttons to match exactly in tablet landscape */
+  .home-button,
+  .menu-button {
+    box-sizing: border-box;
+    height: 32px;
+    padding: 8px 16px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Menu button - positioned left of HOME */
+  .menu-button {
+    position: fixed;
+    top: var(--space-lg);
+    right: calc(var(--space-lg) + 85px);
+    z-index: 9999;
+    /* Reset button defaults */
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    margin: 0;
+    text-decoration: none;
+    color: var(--color-havana);
+    background: rgba(10, 10, 10, 0.7);
+    border: 1px solid rgba(196, 167, 125, 0.3);
+    border-radius: 0;
+    cursor: pointer;
+    transition: background 0.3s var(--ease-luxury),
+                color 0.3s var(--ease-luxury),
+                border-color 0.3s var(--ease-luxury);
+  }
+
+  .menu-button:hover,
+  .menu-button.is-active {
+    background: rgba(196, 167, 125, 0.9);
+    color: var(--color-noir);
+    border-color: var(--color-havana);
+  }
+
+  /* Tablet navigation menu - centered overlay */
+  .tablet-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    background: rgba(0, 0, 0, 0.85);
+    /* Center content */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tablet-nav.is-open {
+    display: flex;
+  }
+
+  .tablet-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-lg);
+    /* Horizontal layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--space-xl);
+  }
+
+  .tablet-nav__item {
+    border-bottom: none;
+    text-align: center;
+    position: relative;
+  }
+
+  .tablet-nav__item:last-child {
+    border-bottom: none;
+  }
+
+  .tablet-nav__label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-havana);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    transition: color 0.3s var(--ease-luxury);
+  }
+
+  .tablet-nav__label--link {
+    text-decoration: none;
+  }
+
+  .tablet-nav__label:hover {
+    color: var(--color-ivory);
+  }
+
+  .tablet-nav__submenu {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-sm) 0 0 0;
+    display: none;
+    text-align: center;
+  }
+
+  .tablet-nav__item--has-submenu.is-expanded .tablet-nav__submenu {
+    display: block;
+  }
+
+  .tablet-nav__link {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: var(--font-weight-light);
+    color: var(--color-platinum);
+    letter-spacing: var(--letter-spacing-wide);
+    text-decoration: none;
+    padding: var(--space-xs) var(--space-sm);
+    transition: color 0.3s var(--ease-luxury);
+  }
+
+  .tablet-nav__link:hover {
+    color: var(--color-ivory);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LUX/ODE CARDS - Shift left to prevent cutoff
+     ═══════════════════════════════════════════════════════════ */
+
+  .flip-cards-container {
+    left: -80px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
    HIGH DPI / RETINA DISPLAYS
    ═══════════════════════════════════════════════════════════ */
 
