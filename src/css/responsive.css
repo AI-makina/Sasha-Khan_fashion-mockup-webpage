@@ -544,11 +544,32 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     LUX/ODE CARDS - Shift left to prevent cutoff
+     LUX/ODE CARDS - Shift left to center within spacing
      ═══════════════════════════════════════════════════════════ */
 
-  .flip-cards-container {
-    left: -80px !important;
+  /* Clip overflow so cards don't bleed into previous section */
+  .bags-intro {
+    overflow: clip !important;
+  }
+
+  .luxury-cards-container {
+    left: var(--space-xs) !important;
+    transform: translateX(-80px);
+  }
+
+  /* O letter card (back face of first card) - shift visually right */
+  .luxury-card[data-index="0"] .luxury-card__face--back {
+    transform: rotateY(180deg) translateX(23px) !important;
+  }
+
+  /* E letter card (back face of third card) - shift visually left 5px */
+  .luxury-card[data-index="2"] .luxury-card__face--back {
+    transform: rotateY(180deg) translateX(-5px) !important;
+  }
+
+  /* X letter card (front face of third card) - shift visually right 10px */
+  .luxury-card[data-index="2"] .luxury-card__face--front {
+    transform: translateX(10px) !important;
   }
 }
 

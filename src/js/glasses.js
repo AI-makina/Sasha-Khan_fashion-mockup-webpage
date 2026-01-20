@@ -13,8 +13,37 @@ class GlassesController {
     this.isReady = false;
     this.videoDuration = 0;
 
+    // Video paths
+    this.desktopVideoSrc = 'assets/videos/glasses/glasses.mp4';
+    this.tabletVideoSrc = 'assets/videos/glasses/glasses-tablet.mp4';
+
     if (this.section && this.video) {
       this.init();
+    }
+  }
+
+  /**
+   * Check if viewport is tablet landscape (991px - 1200px)
+   */
+  isTabletLandscape() {
+    return window.innerWidth >= 991 && window.innerWidth <= 1200;
+  }
+
+  /**
+   * Swap video source based on viewport
+   */
+  swapVideoSource() {
+    const source = this.video.querySelector('source');
+    if (!source) return;
+
+    const targetSrc = this.isTabletLandscape() ? this.tabletVideoSrc : this.desktopVideoSrc;
+    const currentSrc = source.getAttribute('src');
+
+    // Only swap if different
+    if (currentSrc !== targetSrc) {
+      this.isReady = false;
+      source.setAttribute('src', targetSrc);
+      this.video.load();
     }
   }
 
@@ -22,6 +51,9 @@ class GlassesController {
    * Initialize the controller
    */
   init() {
+    // Swap video source for tablet landscape
+    this.swapVideoSource();
+
     // Wait for video metadata to load
     this.video.addEventListener('loadedmetadata', () => {
       this.videoDuration = this.video.duration;
@@ -40,6 +72,11 @@ class GlassesController {
 
     // Setup scroll handler
     this.setupScrollHandler();
+
+    // Handle viewport resize (swap video if needed)
+    window.addEventListener('resize', () => {
+      this.swapVideoSource();
+    });
   }
 
   /**
@@ -91,7 +128,9 @@ class GlassesController {
     progress = Math.max(0, Math.min(1, progress));
 
     // Map progress to video time
-    const targetTime = progress * this.videoDuration;
+    // For tablet landscape, stop slightly before the end to prevent blank last frame
+    const maxTime = this.isTabletLandscape() ? this.videoDuration - 0.1 : this.videoDuration;
+    const targetTime = progress * maxTime;
 
     // Set video currentTime (this scrubs the video)
     if (Math.abs(this.video.currentTime - targetTime) > 0.01) {

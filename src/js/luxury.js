@@ -22,6 +22,9 @@ class LuxuryCardsController {
 
     this.hasPlayed = false;
 
+    // Tablet landscape detection (991px - 1200px)
+    this.isTabletLandscape = () => window.innerWidth >= 991 && window.innerWidth <= 1200;
+
     // Animation phase thresholds
     this.sweepEndProgress = 0.25;     // Cards locked in place by 25%
     this.flipStartProgress = 0.30;    // Flip starts at 30%
@@ -150,6 +153,15 @@ class LuxuryCardsController {
       // Chase from right, lock at 0 (left margin)
       const translateX = (1 - cardProgress) * 100;
       card.style.transform = `translateX(${translateX}vw)`;
+
+      // Tablet landscape only: fade in cards to hide bleeding into previous section
+      if (this.isTabletLandscape()) {
+        // Fade from 0 to 1 as cards enter viewport (first 50% of card progress)
+        const opacityProgress = Math.min(1, cardProgress * 2);
+        card.style.opacity = opacityProgress;
+      } else {
+        card.style.opacity = 1;
+      }
 
       // Toggle active state
       if (cardProgress > 0 && cardProgress < 1) {
@@ -344,8 +356,9 @@ class LuxuryCardsController {
       const cardInner = card.querySelector('.luxury-card__inner');
       const odeVideo = card.querySelector('.luxury-card__video--ode');
 
-      // Ensure card is in final position
+      // Ensure card is in final position and fully visible
       card.style.transform = 'translateX(0)';
+      card.style.opacity = '1';
 
       if (cardInner) {
         cardInner.style.transform = 'rotateY(180deg)';
@@ -381,6 +394,7 @@ class LuxuryCardsController {
       const odeVideo = card.querySelector('.luxury-card__video--ode');
 
       card.style.transform = 'translateX(100vw)';
+      card.style.opacity = this.isTabletLandscape() ? '0' : '1';
       card.classList.remove('is-active');
 
       // Reset flip rotation

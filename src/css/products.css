@@ -185,6 +185,9 @@
   cursor: pointer;
   transition: all var(--duration-normal) var(--ease-smooth);
   white-space: nowrap;
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
 }
 
 .product-card__detail-btn:hover {
