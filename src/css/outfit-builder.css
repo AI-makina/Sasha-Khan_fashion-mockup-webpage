@@ -571,6 +571,104 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   MOBILE LANDSCAPE
+   Carousel on left, combo image on right, both full viewport height
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .outfit-builder {
+    flex-direction: row !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  .outfit-builder__selectors {
+    flex: 0 0 50% !important;
+    height: 100vh !important;
+    padding: var(--space-sm) !important;
+    padding-top: calc(60px + var(--space-sm)) !important;
+    overflow-y: auto !important;
+    justify-content: flex-start !important;
+  }
+
+  .outfit-builder__preview {
+    flex: 0 0 50% !important;
+    height: 100vh !important;
+    padding: 0 !important;
+  }
+
+  .outfit-preview {
+    height: 100vh !important;
+    width: 100% !important;
+    max-height: 100vh !important;
+    aspect-ratio: unset !important;
+  }
+
+  .outfit-preview__image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  /* Smaller carousel items for mobile landscape */
+  .outfit-carousel__item {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  .outfit-carousel__item--large,
+  .outfit-carousel--large .outfit-carousel__item {
+    width: 150px !important;
+    height: 200px !important;
+  }
+
+  .outfit-carousel__arrow {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .outfit-carousel__arrow svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .outfit-carousel__label {
+    font-size: var(--font-size-sm) !important;
+  }
+
+  .outfit-carousel__name {
+    font-size: var(--font-size-xs) !important;
+    min-height: 20px !important;
+  }
+
+  /* Header adjustments */
+  .outfit-header {
+    padding: var(--space-xs) var(--space-md) !important;
+  }
+
+  .outfit-header__title {
+    font-size: var(--font-size-lg) !important;
+  }
+
+  .outfit-header__logo {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .outfit-header__spacer {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  /* Nav buttons */
+  .nav-button {
+    top: var(--space-sm) !important;
+    font-size: 10px !important;
+    padding: var(--space-xs) var(--space-sm) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
    REDUCED MOTION
    ═══════════════════════════════════════════════════════════ */
 

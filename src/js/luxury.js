@@ -26,11 +26,15 @@ class LuxuryCardsController {
     // Tablet landscape detection (991px - 1200px)
     this.isTabletLandscape = () => window.innerWidth >= 991 && window.innerWidth <= 1200;
 
-    // Tablet portrait detection (768px - 990px)
-    this.isTabletPortrait = () => window.innerWidth >= 768 && window.innerWidth <= 990;
+    // Tablet portrait detection (768px - 990px, height > 500px)
+    // Height check prevents overlap with mobile landscape
+    this.isTabletPortrait = () => window.innerWidth >= 768 && window.innerWidth <= 990 && window.innerHeight > 500;
 
-    // Combined tablet detection for opacity fade
-    this.isTablet = () => this.isTabletLandscape() || this.isTabletPortrait();
+    // Mobile landscape detection (height <= 500px, landscape orientation)
+    this.isMobileLandscape = () => window.innerHeight <= 500 && window.innerWidth > window.innerHeight;
+
+    // Combined detection for opacity fade (tablet + mobile landscape)
+    this.isTablet = () => this.isTabletLandscape() || this.isTabletPortrait() || this.isMobileLandscape();
 
     // Select correct video based on viewport
     this.bagsVideo = this.isTabletPortrait() && this.tabletPortraitVideo
@@ -56,6 +60,20 @@ class LuxuryCardsController {
   init() {
     this.setupScrollHandler();
     this.preloadVideos();
+    this.setupResizeHandler();
+  }
+
+  /**
+   * Handle viewport resize/orientation change
+   * Re-selects the correct video based on new viewport
+   */
+  setupResizeHandler() {
+    window.addEventListener('resize', () => {
+      // Re-select video based on new viewport
+      this.bagsVideo = this.isTabletPortrait() && this.tabletPortraitVideo
+        ? this.tabletPortraitVideo
+        : this.desktopVideo;
+    });
   }
 
   /**

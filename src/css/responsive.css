@@ -239,23 +239,475 @@
    LANDSCAPE MOBILE
    ═══════════════════════════════════════════════════════════ */
 
+/* Mobile landscape menu - hidden by default */
+.mobile-landscape-menu,
+.ml-video-overlay {
+  display: none;
+}
+
 @media (max-height: 500px) and (orientation: landscape) {
-  .hero {
-    height: auto;
-    min-height: 100vh;
+  /* ═══════════════════════════════════════════════════════════
+     FIX: Empty Space on Right
+     Reinforce overflow-x: clip for mobile landscape
+     ═══════════════════════════════════════════════════════════ */
+
+  html {
+    overscroll-behavior-x: none !important;
   }
 
-  .hero-triangle {
-    position: relative;
-    height: 50vh;
-    min-height: 200px;
-    clip-path: none !important;
+  body {
+    overflow-x: clip !important;
+    overscroll-behavior-x: none !important;
   }
+
+  /* ═══════════════════════════════════════════════════════════
+     HERO SECTION - Full Viewport Video Sequence
+     Videos play one at a time: Freedom → Glamour → Elite → repeat
+     ═══════════════════════════════════════════════════════════ */
+
+  .hero {
+    position: relative !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    display: block !important;
+    flex-direction: unset !important;
+    overflow: hidden !important;
+  }
+
+  /* Hide non-essential elements */
+  .hero-diagonal-svg,
+  .hero-scroll-indicator,
+  .hero-links,
+  .hero-triangle__title,
+  .hero-triangle__content,
+  .collections-menu,
+  .hero-decorative-lines {
+    display: none !important;
+  }
+
+  /* Hide tablet menus */
+  .menu-button,
+  .tablet-nav,
+  .tablet-portrait-menu,
+  .tp-row1-overlay,
+  .tp-row3-overlay {
+    display: none !important;
+  }
+
+  /* Show mobile landscape elements */
+  .mobile-landscape-menu,
+  .ml-video-overlay {
+    display: flex !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     VIDEO TRIANGLES - Full viewport, one at a time
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Hide collections image (bottom triangle) completely */
+  .hero-triangle--bottom {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+  }
+
+  /* All video triangles: absolute, full viewport, hidden by default */
+  .hero-triangle--top,
+  .hero-triangle--left,
+  .hero-triangle--right {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+    clip-path: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    z-index: 1 !important;
+    order: unset !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Specific override for Elite (left triangle) */
+  .hero-triangle--left {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  /* Active video - visible (instant switch, no transition) */
+  .hero-triangle.ml-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 2 !important;
+    transition: none !important;
+  }
+
+  /* Video fills container */
+  .hero-triangle__video {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     50% OPACITY OVERLAY - Over all videos
+     ═══════════════════════════════════════════════════════════ */
+
+  .ml-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LOGO - Upper Left
+     ═══════════════════════════════════════════════════════════ */
 
   .hero-logo {
-    position: fixed;
-    top: var(--space-sm);
-    width: 60px;
+    position: fixed !important;
+    top: var(--space-sm) !important;
+    left: var(--space-sm) !important;
+    right: auto !important;
+    transform: none !important;
+    z-index: 100;
+  }
+
+  .hero-logo__image {
+    width: 60px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     HOME BUTTON - Upper Right
+     ═══════════════════════════════════════════════════════════ */
+
+  .home-button {
+    position: fixed !important;
+    top: var(--space-sm) !important;
+    right: var(--space-sm) !important;
+    left: auto !important;
+    z-index: 100;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     MOBILE LANDSCAPE MENU - Centered Stripe
+     ═══════════════════════════════════════════════════════════ */
+
+  .mobile-landscape-menu {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .mobile-landscape-menu__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-lg);
+    pointer-events: auto;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.6);
+  }
+
+  .mobile-landscape-menu__item {
+    position: relative;
+    text-align: center;
+  }
+
+  .mobile-landscape-menu__label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-havana);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    padding: var(--space-xs) var(--space-sm);
+    cursor: pointer;
+    transition: color 0.3s var(--ease-luxury);
+    text-decoration: none;
+    background: transparent;
+    border: none;
+  }
+
+  .mobile-landscape-menu__label:hover {
+    color: var(--color-ivory);
+  }
+
+  /* Dropdown submenu */
+  .mobile-landscape-menu__submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    list-style: none;
+    margin: 0;
+    padding: var(--space-xs) 0;
+    background: rgba(10, 10, 10, 0.6);
+    min-width: 100px;
+    display: none;
+    z-index: 30;
+  }
+
+  .mobile-landscape-menu__item--has-submenu.is-open .mobile-landscape-menu__submenu {
+    display: block;
+  }
+
+  .mobile-landscape-menu__link {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-havana);
+    letter-spacing: var(--letter-spacing-wide);
+    text-decoration: none;
+    padding: var(--space-xs) var(--space-sm);
+    text-align: center;
+    transition: color 0.3s var(--ease-luxury);
+  }
+
+  .mobile-landscape-menu__link:hover {
+    color: var(--color-ivory);
+  }
+
+  /* Dropdown arrow indicator */
+  .mobile-landscape-menu__item--has-submenu .mobile-landscape-menu__label::after {
+    content: ' ▾';
+    font-size: 8px;
+  }
+
+  .mobile-landscape-menu__item--has-submenu.is-open .mobile-landscape-menu__label::after {
+    content: ' ▴';
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CITIES SECTION - All 5 cards fit horizontally
+     ═══════════════════════════════════════════════════════════ */
+
+  .cities {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    width: 100% !important;
+    z-index: 1 !important;
+  }
+
+  .cities__container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    gap: var(--space-xs) !important;
+    padding: 0 var(--space-sm) !important;
+  }
+
+  .cities__card {
+    flex: 1 1 0 !important;
+    max-width: 18% !important;
+    min-width: 0 !important;
+  }
+
+  .cities__card-image {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     GRAFFITI SECTION - Scroll-controlled video
+     Full width below city cards
+     ═══════════════════════════════════════════════════════════ */
+
+  .graffiti-divider {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 40vh !important;
+    min-height: 180px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: var(--color-noir) !important;
+    box-sizing: border-box !important;
+  }
+
+  .graffiti-divider__video {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BAGS INTRO (KEYHOLE) - Ensure video visible in mobile landscape
+     ═══════════════════════════════════════════════════════════ */
+
+  .bags-intro {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    overflow: clip !important;
+  }
+
+  .bags-intro__video-container {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .bags-intro__video--desktop {
+    display: block !important;
+    visibility: visible !important;
+    /* Note: opacity controlled by JavaScript for fade animation */
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     GLASSES - Ensure video visible in mobile landscape
+     Scroll-controlled video section
+     ═══════════════════════════════════════════════════════════ */
+
+  .glasses {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    height: 200vh !important;
+    width: 100% !important;
+  }
+
+  .glasses__video-container {
+    display: block !important;
+    visibility: visible !important;
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  .glasses__video {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .glasses__video--desktop {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Hide tablet portrait video in mobile landscape */
+  .glasses__video--tablet-portrait {
+    display: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CATWALK SECTION - Horizontal scroll to clothing
+     overflow: clip prevents empty space without breaking sticky
+     ═══════════════════════════════════════════════════════════ */
+
+  .catwalk {
+    overflow: clip !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LUX PRODUCT NAMES - Lower position (LUNE, ULYSSE, XELINE)
+     ═══════════════════════════════════════════════════════════ */
+
+  .products-container--lux .product-card__name {
+    transform: translateY(9vh) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     PRODUCT MODALS - Reduced image size for mobile landscape
+     Images scaled down to fit viewport, text remains scrollable
+     ═══════════════════════════════════════════════════════════ */
+
+  .product-modal__content {
+    flex-direction: row !important;
+    height: 100vh !important;
+  }
+
+  .product-modal__image {
+    flex: 0 0 40% !important;
+    max-width: 40% !important;
+    height: 100vh !important;
+  }
+
+  .product-modal__image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+  }
+
+  .product-modal__details {
+    flex: 1 !important;
+    max-width: 60% !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    padding: var(--space-md) !important;
+  }
+
+  .product-modal__title {
+    font-size: var(--font-size-2xl) !important;
+  }
+
+  .product-modal__section p {
+    font-size: var(--font-size-sm) !important;
+  }
+
+  /* Close button - move to upper left, black color */
+  .product-modal__close {
+    right: auto !important;
+    left: var(--space-md) !important;
+    color: #000000 !important;
   }
 }
 
@@ -594,10 +1046,11 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   TABLET PORTRAIT (768px - 990px)
+   TABLET PORTRAIT (768px - 990px width, height > 500px)
+   Height check prevents overlap with mobile landscape
    ═══════════════════════════════════════════════════════════ */
 
-@media (min-width: 768px) and (max-width: 990px) {
+@media (min-width: 768px) and (max-width: 990px) and (min-height: 501px) {
   /* Show tablet portrait elements */
   .tablet-portrait-menu,
   .tp-row1-overlay,

@@ -22,10 +22,11 @@ class BagsController {
   }
 
   /**
-   * Check if viewport is tablet portrait (768px - 990px)
+   * Check if viewport is tablet portrait (768px - 990px width, height > 500px)
+   * Height check prevents overlap with mobile landscape
    */
   isTabletPortrait() {
-    return window.innerWidth >= 768 && window.innerWidth <= 990;
+    return window.innerWidth >= 768 && window.innerWidth <= 990 && window.innerHeight > 500;
   }
 
   /**
@@ -46,6 +47,16 @@ class BagsController {
     this.setupVideoObserver();
     this.setupShowcaseObserver();
     this.setupScrollHandler();
+
+    // Handle viewport resize/orientation change
+    window.addEventListener('resize', () => {
+      const previousVideo = this.video;
+      this.selectVideo();
+      // If video changed, update observers
+      if (previousVideo !== this.video) {
+        this.isVideoPlaying = false;
+      }
+    });
   }
 
   /**

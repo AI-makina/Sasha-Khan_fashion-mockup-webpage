@@ -674,10 +674,11 @@ class TabletPortraitSequenceController {
   }
 
   /**
-   * Check if viewport is tablet portrait (768px - 990px)
+   * Check if viewport is tablet portrait (768px - 990px width, height > 500px)
+   * Height check prevents overlap with mobile landscape
    */
   isTabletPortrait() {
-    return window.innerWidth >= 768 && window.innerWidth <= 990;
+    return window.innerWidth >= 768 && window.innerWidth <= 990 && window.innerHeight > 500;
   }
 
   /**
@@ -944,6 +945,344 @@ class TabletPortraitSequenceController {
 }
 
 /**
+ * Mobile Landscape Sequence Controller
+ * Plays videos in sequence: Freedom → Glamour → Elite → repeat
+ * One video at a time, full viewport
+ */
+class MobileLandscapeSequenceController {
+  constructor() {
+    this.isRunning = false;
+    this.currentIndex = 0;
+
+    // Video triangles (same elements, different display)
+    this.triangles = {
+      freedom: document.querySelector('.hero-triangle--top'),
+      glamour: document.querySelector('.hero-triangle--right'),
+      elite: document.querySelector('.hero-triangle--left')
+    };
+
+    // Sequence order: Freedom → Glamour → Elite
+    this.sequence = ['freedom', 'glamour', 'elite'];
+
+    this.boundAdvance = null;
+    this.init();
+  }
+
+  /**
+   * Check if viewport is mobile landscape
+   */
+  isMobileLandscape() {
+    return window.innerHeight <= 500 && window.innerWidth > window.innerHeight;
+  }
+
+  /**
+   * Initialize the controller
+   */
+  init() {
+    // Start if in mobile landscape viewport
+    if (this.isMobileLandscape()) {
+      this.startSequence();
+    }
+
+    // Handle viewport resize
+    window.addEventListener('resize', () => this.handleResize());
+
+    // Handle page visibility
+    document.addEventListener('visibilitychange', () => this.handleVisibility());
+
+    // Setup menu dropdown interactions
+    this.setupMenuDropdowns();
+  }
+
+  /**
+   * Setup menu dropdown toggle behavior
+   */
+  setupMenuDropdowns() {
+    const menuItems = document.querySelectorAll('.mobile-landscape-menu__item--has-submenu');
+
+    menuItems.forEach(item => {
+      const label = item.querySelector('.mobile-landscape-menu__label');
+
+      if (label) {
+        label.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Close other open menus
+          menuItems.forEach(other => {
+            if (other !== item) {
+              other.classList.remove('is-open');
+            }
+          });
+
+          // Toggle this menu
+          item.classList.toggle('is-open');
+        });
+      }
+    });
+
+    // Close menus when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.mobile-landscape-menu__item--has-submenu')) {
+        menuItems.forEach(item => item.classList.remove('is-open'));
+      }
+    });
+
+    // Handle scroll target links (LUX, ODE)
+    const scrollLinks = document.querySelectorAll('.mobile-landscape-menu__link[data-scroll-target]');
+    scrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('data-scroll-target');
+        // Close menu
+        document.querySelectorAll('.mobile-landscape-menu__item--has-submenu').forEach(item => {
+          item.classList.remove('is-open');
+        });
+        // Scroll to target section
+        const targetSection = document.getElementById(`${target}-section`) ||
+                              document.querySelector(`[data-collection="${target}"]`);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  /**
+   * Handle viewport resize
+   */
+  handleResize() {
+    if (this.isMobileLandscape() && !this.isRunning) {
+      this.startSequence();
+    } else if (!this.isMobileLandscape() && this.isRunning) {
+      this.stopSequence();
+    }
+  }
+
+  /**
+   * Handle page visibility changes
+   */
+  handleVisibility() {
+    if (!this.isMobileLandscape()) return;
+
+    if (document.hidden) {
+      this.pauseCurrentVideo();
+    } else if (this.isRunning) {
+      this.resumeCurrentVideo();
+    }
+  }
+
+  /**
+   * Preload all videos for instant playback
+   */
+  preloadVideos() {
+    const loadPromises = [];
+
+    this.sequence.forEach(videoName => {
+      const triangle = this.triangles[videoName];
+      if (triangle) {
+        const video = triangle.querySelector('video');
+        if (video) {
+          video.preload = 'auto';
+          video.muted = true;
+          // IMPORTANT: Remove loop attribute so 'ended' event fires
+          video.loop = false;
+          video.removeAttribute('loop');
+
+          // Create promise that resolves when video can play through
+          const loadPromise = new Promise(resolve => {
+            if (video.readyState >= 4) {
+              resolve();
+            } else {
+              video.addEventListener('canplaythrough', () => resolve(), { once: true });
+              video.load();
+            }
+          });
+          loadPromises.push(loadPromise);
+        }
+      }
+    });
+
+    return Promise.all(loadPromises);
+  }
+
+  /**
+   * Prepare next video while current is playing - reset to start and pause
+   */
+  prepareNextVideo() {
+    const nextIndex = (this.currentIndex + 1) % this.sequence.length;
+    const nextVideoName = this.sequence[nextIndex];
+    const nextTriangle = this.triangles[nextVideoName];
+
+    if (nextTriangle) {
+      const nextVideo = nextTriangle.querySelector('video');
+      if (nextVideo) {
+        // Reset to start and pause - keep it ready
+        nextVideo.currentTime = 0;
+        nextVideo.pause();
+      }
+    }
+  }
+
+  /**
+   * Reset all videos to start for instant playback
+   */
+  resetAllVideos() {
+    this.sequence.forEach(videoName => {
+      const triangle = this.triangles[videoName];
+      if (triangle) {
+        const video = triangle.querySelector('video');
+        if (video) {
+          video.currentTime = 0;
+          video.pause();
+        }
+      }
+    });
+  }
+
+  /**
+   * Start the video sequence
+   */
+  startSequence() {
+    if (this.isRunning) return;
+
+    this.isRunning = true;
+    this.currentIndex = 0;
+
+    // Add class to body for styling
+    document.body.classList.add('mobile-landscape-sequence-active');
+
+    // Clear all active states first
+    this.clearAllActive();
+
+    // Preload and reset all videos to frame 0
+    this.preloadVideos();
+    this.resetAllVideos();
+
+    // Start playing immediately
+    this.playVideo(this.currentIndex);
+  }
+
+  /**
+   * Stop the video sequence
+   */
+  stopSequence() {
+    this.isRunning = false;
+
+    // Remove body class
+    document.body.classList.remove('mobile-landscape-sequence-active');
+
+    // Stop all videos and clear classes
+    Object.values(this.triangles).forEach(triangle => {
+      if (triangle) {
+        triangle.classList.remove('ml-active');
+        const video = triangle.querySelector('video');
+        if (video) {
+          video.pause();
+          video.removeEventListener('ended', this.boundAdvance);
+        }
+      }
+    });
+  }
+
+  /**
+   * Clear all active states
+   */
+  clearAllActive() {
+    Object.values(this.triangles).forEach(triangle => {
+      if (triangle) {
+        triangle.classList.remove('ml-active');
+      }
+    });
+  }
+
+  /**
+   * Play video at given index
+   */
+  playVideo(index) {
+    const videoName = this.sequence[index];
+    const triangle = this.triangles[videoName];
+
+    if (!triangle) return;
+
+    const video = triangle.querySelector('video');
+    if (video) {
+      // Remove old listener from all videos
+      this.sequence.forEach(name => {
+        const t = this.triangles[name];
+        if (t) {
+          const v = t.querySelector('video');
+          if (v && this.boundAdvance) {
+            v.removeEventListener('ended', this.boundAdvance);
+          }
+        }
+      });
+
+      // IMPORTANT: Ensure loop is disabled so 'ended' event fires
+      video.loop = false;
+
+      // Clear previous active and set new active instantly
+      this.clearAllActive();
+      triangle.classList.add('ml-active');
+
+      // Reset video to start
+      video.currentTime = 0;
+
+      // Create bound advance function
+      this.boundAdvance = () => this.advanceToNext();
+
+      // Listen for video end
+      video.addEventListener('ended', this.boundAdvance, { once: true });
+
+      // Prepare next video in background while this one plays
+      this.prepareNextVideo();
+
+      // Play video immediately
+      video.play().catch(err => console.log('Mobile landscape video play prevented:', err));
+    }
+  }
+
+  /**
+   * Advance to next video in sequence
+   */
+  advanceToNext() {
+    if (!this.isRunning) return;
+
+    // Move to next video (loop back to 0 after last)
+    this.currentIndex = (this.currentIndex + 1) % this.sequence.length;
+
+    // Play next video immediately - it should already be preloaded
+    this.playVideo(this.currentIndex);
+  }
+
+  /**
+   * Pause the current video
+   */
+  pauseCurrentVideo() {
+    const videoName = this.sequence[this.currentIndex];
+    const triangle = this.triangles[videoName];
+    if (triangle) {
+      const video = triangle.querySelector('video');
+      if (video) video.pause();
+    }
+  }
+
+  /**
+   * Resume the current video
+   */
+  resumeCurrentVideo() {
+    const videoName = this.sequence[this.currentIndex];
+    const triangle = this.triangles[videoName];
+    if (triangle) {
+      const video = triangle.querySelector('video');
+      if (video) {
+        video.play().catch(err => console.log('Mobile landscape video resume prevented:', err));
+      }
+    }
+  }
+}
+
+/**
  * Initialize on DOM ready
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -955,6 +1294,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Tablet portrait sequence controller - plays videos in alternating rows on tablet portrait
   new TabletPortraitSequenceController();
+
+  // Mobile landscape sequence controller - plays videos in sequence on mobile landscape
+  new MobileLandscapeSequenceController();
 
   // Initialize logo parallax
   new LogoParallax();

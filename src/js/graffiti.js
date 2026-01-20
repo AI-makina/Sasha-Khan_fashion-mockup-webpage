@@ -31,6 +31,9 @@ class GraffitiController {
       this.updateVideoPosition();
     }
 
+    // Force video to load on mobile (browsers may not preload)
+    this.video.load();
+
     // Setup scroll handler
     this.setupScrollHandler();
   }

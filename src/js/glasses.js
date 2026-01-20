@@ -32,10 +32,11 @@ class GlassesController {
   }
 
   /**
-   * Check if viewport is tablet portrait (768px - 990px)
+   * Check if viewport is tablet portrait (768px - 990px width, height > 500px)
+   * Height check prevents overlap with mobile landscape
    */
   isTabletPortrait() {
-    return window.innerWidth >= 768 && window.innerWidth <= 990;
+    return window.innerWidth >= 768 && window.innerWidth <= 990 && window.innerHeight > 500;
   }
 
   /**
@@ -75,6 +76,9 @@ class GlassesController {
       this.isReady = true;
       this.updateVideoPosition();
     }
+
+    // Force video to load on mobile (browsers may not preload)
+    this.video.load();
   }
 
   /**
