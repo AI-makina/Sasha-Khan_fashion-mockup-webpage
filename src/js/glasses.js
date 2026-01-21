@@ -40,12 +40,19 @@ class GlassesController {
   }
 
   /**
+   * Check if viewport is mobile portrait (width <= 767px, height > 500px)
+   */
+  isMobilePortrait() {
+    return window.innerWidth <= 767 && window.innerHeight > 500;
+  }
+
+  /**
    * Select the correct video element based on viewport
    */
   selectVideo() {
     const wasVideo = this.video;
 
-    if (this.isTabletPortrait() && this.tabletPortraitVideo) {
+    if ((this.isTabletPortrait() || this.isMobilePortrait()) && this.tabletPortraitVideo) {
       this.video = this.tabletPortraitVideo;
     } else if (this.desktopVideo) {
       this.video = this.desktopVideo;
@@ -85,7 +92,7 @@ class GlassesController {
    * Swap video source based on viewport (for desktop/tablet landscape)
    */
   swapVideoSource() {
-    if (!this.video || this.isTabletPortrait()) return;
+    if (!this.video || this.isTabletPortrait() || this.isMobilePortrait()) return;
 
     const source = this.video.querySelector('source');
     if (!source) return;
@@ -173,8 +180,8 @@ class GlassesController {
     progress = Math.max(0, Math.min(1, progress));
 
     // Map progress to video time
-    // For tablet landscape/portrait, stop slightly before the end to prevent blank last frame
-    const maxTime = (this.isTabletLandscape() || this.isTabletPortrait()) ? this.videoDuration - 0.1 : this.videoDuration;
+    // For tablet landscape/portrait/mobile portrait, stop slightly before the end to prevent blank last frame
+    const maxTime = (this.isTabletLandscape() || this.isTabletPortrait() || this.isMobilePortrait()) ? this.videoDuration - 0.1 : this.videoDuration;
     const targetTime = progress * maxTime;
 
     // Set video currentTime (this scrubs the video)

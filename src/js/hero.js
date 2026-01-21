@@ -1283,6 +1283,450 @@ class MobileLandscapeSequenceController {
 }
 
 /**
+ * Mobile Portrait Sequence Controller
+ * Plays videos in sequence: Freedom → Glamour → Elite → Collections (5s) → repeat
+ * 4 rows at 25vh each, 50% opacity overlay on inactive rows
+ * Only active in mobile portrait viewport (width <= 767px AND height > 500px)
+ */
+class MobilePortraitSequenceController {
+  constructor() {
+    this.isRunning = false;
+    this.currentIndex = 0;
+    this.collectionsDisplayTime = 5000; // 5 seconds for Collections image
+    this.sequenceTimer = null;
+
+    // Video/Image triangles
+    this.triangles = {
+      freedom: document.querySelector('.hero-triangle--top'),
+      glamour: document.querySelector('.hero-triangle--right'),
+      elite: document.querySelector('.hero-triangle--left'),
+      collections: document.querySelector('.hero-triangle--bottom')
+    };
+
+    // Sequence order: Freedom → Glamour → Elite → Collections
+    this.sequence = [
+      { name: 'freedom', type: 'video' },
+      { name: 'glamour', type: 'video' },
+      { name: 'elite', type: 'video' },
+      { name: 'collections', type: 'image' }
+    ];
+
+    // Menu elements
+    this.menuBtn = document.querySelector('.mobile-portrait-menu-btn');
+    this.menu = document.querySelector('.mobile-portrait-menu');
+
+    this.boundAdvance = null;
+    this.init();
+  }
+
+  /**
+   * Check if viewport is mobile portrait
+   */
+  isMobilePortrait() {
+    return window.innerWidth <= 767 && window.innerHeight > 500;
+  }
+
+  /**
+   * Initialize the controller
+   */
+  init() {
+    // Preload all videos immediately if in mobile portrait
+    if (this.isMobilePortrait()) {
+      this.preloadAllVideos();
+      this.startSequence();
+    }
+
+    // Handle viewport resize
+    window.addEventListener('resize', () => this.handleResize());
+
+    // Handle page visibility
+    document.addEventListener('visibilitychange', () => this.handleVisibility());
+
+    // Setup menu interactions
+    this.setupMenu();
+
+    // Setup tap navigation for hero triangles
+    this.setupTapNavigation();
+  }
+
+  /**
+   * Setup tap navigation for hero triangles
+   * Videos link to their subpages, Collections opens the menu
+   */
+  setupTapNavigation() {
+    // Map triangle names to their destination URLs
+    const destinations = {
+      freedom: 'freedom.html',
+      glamour: 'glamour.html',
+      elite: 'elite.html',
+      collections: null // Opens menu instead
+    };
+
+    // Add click handlers to each triangle
+    Object.keys(this.triangles).forEach(name => {
+      const triangle = this.triangles[name];
+      if (!triangle) return;
+
+      // Make the triangle tappable
+      triangle.style.cursor = 'pointer';
+
+      triangle.addEventListener('click', (e) => {
+        // Only handle in mobile portrait mode
+        if (!this.isMobilePortrait()) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (name === 'collections') {
+          // Open the menu
+          if (this.menu && this.menuBtn) {
+            this.menu.classList.add('is-open');
+            this.menuBtn.classList.add('is-active');
+            this.menuBtn.setAttribute('aria-expanded', 'true');
+            document.body.classList.add('mp-menu-open');
+          }
+        } else {
+          // Navigate to the subpage
+          const url = destinations[name];
+          if (url) {
+            window.location.href = url;
+          }
+        }
+      });
+    });
+  }
+
+  /**
+   * Preload all videos - load and pause at first frame so they're visible
+   */
+  preloadAllVideos() {
+    this.sequence.forEach(item => {
+      if (item.type === 'video') {
+        const triangle = this.triangles[item.name];
+        if (triangle) {
+          const video = triangle.querySelector('video');
+          if (video) {
+            // Set preload to auto
+            video.preload = 'auto';
+            video.muted = true;
+
+            // Load the video
+            video.load();
+
+            // When metadata is loaded, seek to first frame
+            video.addEventListener('loadedmetadata', () => {
+              video.currentTime = 0.001; // Slight offset to force frame render
+            }, { once: true });
+
+            // If already loaded, set to first frame
+            if (video.readyState >= 1) {
+              video.currentTime = 0.001;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * Setup menu toggle and dropdown interactions
+   */
+  setupMenu() {
+    if (!this.menuBtn || !this.menu) return;
+
+    // Toggle menu on button click
+    this.menuBtn.addEventListener('click', () => {
+      const isOpen = this.menu.classList.toggle('is-open');
+      this.menuBtn.classList.toggle('is-active', isOpen);
+      this.menuBtn.setAttribute('aria-expanded', isOpen);
+      document.body.classList.toggle('mp-menu-open', isOpen);
+    });
+
+    // Setup dropdown submenus
+    const menuItems = document.querySelectorAll('.mobile-portrait-menu__item--has-submenu');
+    menuItems.forEach(item => {
+      const label = item.querySelector('.mobile-portrait-menu__label');
+      if (label) {
+        label.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Close other open menus
+          menuItems.forEach(other => {
+            if (other !== item) {
+              other.classList.remove('is-open');
+            }
+          });
+
+          // Toggle this menu
+          item.classList.toggle('is-open');
+        });
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.mobile-portrait-menu') &&
+          !e.target.closest('.mobile-portrait-menu-btn')) {
+        this.menu.classList.remove('is-open');
+        this.menuBtn.classList.remove('is-active');
+        this.menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('mp-menu-open');
+      }
+    });
+
+    // Handle scroll target links (LUX, ODE)
+    const scrollLinks = document.querySelectorAll('.mobile-portrait-menu__link[data-scroll-target]');
+    scrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('data-scroll-target');
+
+        // Close menu
+        this.menu.classList.remove('is-open');
+        this.menuBtn.classList.remove('is-active');
+        this.menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('mp-menu-open');
+
+        // Scroll to target section
+        const bagsSection = document.querySelector('.bags-intro');
+        if (bagsSection) {
+          const sectionTop = bagsSection.offsetTop;
+          const sectionHeight = bagsSection.offsetHeight;
+          const viewportHeight = window.innerHeight;
+          const scrollRange = sectionHeight - viewportHeight;
+
+          let targetProgress = target === 'lux' ? 0.25 : 0.80;
+          const scrollPosition = sectionTop + (scrollRange * targetProgress);
+
+          window.scrollTo({
+            top: scrollPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Close menu on navigation link click
+    const navLinks = document.querySelectorAll('.mobile-portrait-menu__label[href], .mobile-portrait-menu__link[href]:not([data-scroll-target])');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        this.menu.classList.remove('is-open');
+        this.menuBtn.classList.remove('is-active');
+        this.menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('mp-menu-open');
+      });
+    });
+  }
+
+  /**
+   * Handle viewport resize
+   */
+  handleResize() {
+    if (this.isMobilePortrait() && !this.isRunning) {
+      this.preloadAllVideos();
+      this.startSequence();
+    } else if (!this.isMobilePortrait() && this.isRunning) {
+      this.stopSequence();
+    }
+  }
+
+  /**
+   * Handle page visibility changes
+   */
+  handleVisibility() {
+    if (!this.isMobilePortrait()) return;
+
+    if (document.hidden) {
+      this.pauseSequence();
+    } else if (this.isRunning) {
+      this.resumeSequence();
+    }
+  }
+
+  /**
+   * Start the video sequence
+   */
+  startSequence() {
+    if (this.isRunning) return;
+
+    this.isRunning = true;
+    this.currentIndex = 0;
+
+    // Add class to body for styling
+    document.body.classList.add('mobile-portrait-sequence-active');
+
+    // Reset all videos and states
+    this.resetAll();
+
+    // Start playing first item
+    this.playCurrentItem();
+  }
+
+  /**
+   * Stop the sequence
+   */
+  stopSequence() {
+    this.isRunning = false;
+
+    // Clear any pending timers
+    if (this.sequenceTimer) {
+      clearTimeout(this.sequenceTimer);
+      this.sequenceTimer = null;
+    }
+
+    // Remove body class
+    document.body.classList.remove('mobile-portrait-sequence-active');
+
+    // Reset all states
+    this.resetAll();
+
+    // Restore video loop attributes for other modes
+    Object.values(this.triangles).forEach(triangle => {
+      if (triangle) {
+        const video = triangle.querySelector('video');
+        if (video) {
+          video.setAttribute('loop', '');
+        }
+      }
+    });
+  }
+
+  /**
+   * Pause the sequence
+   */
+  pauseSequence() {
+    if (this.sequenceTimer) {
+      clearTimeout(this.sequenceTimer);
+      this.sequenceTimer = null;
+    }
+
+    const current = this.sequence[this.currentIndex];
+    if (current.type === 'video') {
+      const triangle = this.triangles[current.name];
+      const video = triangle?.querySelector('video');
+      if (video) video.pause();
+    }
+  }
+
+  /**
+   * Resume the sequence
+   */
+  resumeSequence() {
+    if (!this.isRunning) return;
+
+    const current = this.sequence[this.currentIndex];
+    if (current.type === 'video') {
+      const triangle = this.triangles[current.name];
+      const video = triangle?.querySelector('video');
+      if (video) {
+        video.play().catch(err => console.log('Mobile portrait video resume prevented:', err));
+      }
+    } else {
+      // For Collections image, restart the timer
+      this.sequenceTimer = setTimeout(() => this.advanceSequence(), this.collectionsDisplayTime);
+    }
+  }
+
+  /**
+   * Reset all videos and states
+   */
+  resetAll() {
+    Object.entries(this.triangles).forEach(([name, triangle]) => {
+      if (triangle) {
+        triangle.classList.remove('mp-active', 'mp-dimmed');
+        const video = triangle.querySelector('video');
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+          if (this.boundAdvance) {
+            video.removeEventListener('ended', this.boundAdvance);
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * Play the current item in the sequence
+   */
+  playCurrentItem() {
+    if (!this.isRunning) return;
+
+    const current = this.sequence[this.currentIndex];
+    const currentTriangle = this.triangles[current.name];
+
+    if (!currentTriangle) return;
+
+    // Update states: active for current, dimmed for others
+    Object.entries(this.triangles).forEach(([name, triangle]) => {
+      if (triangle) {
+        if (name === current.name) {
+          triangle.classList.add('mp-active');
+          triangle.classList.remove('mp-dimmed');
+        } else {
+          // For Collections (image), don't dim others
+          if (current.type === 'image') {
+            triangle.classList.remove('mp-dimmed', 'mp-active');
+          } else {
+            triangle.classList.add('mp-dimmed');
+            triangle.classList.remove('mp-active');
+          }
+        }
+      }
+    });
+
+    if (current.type === 'video') {
+      const video = currentTriangle.querySelector('video');
+      if (video) {
+        // Remove loop so 'ended' event fires
+        video.removeAttribute('loop');
+        video.currentTime = 0;
+
+        // Remove old listener
+        if (this.boundAdvance) {
+          video.removeEventListener('ended', this.boundAdvance);
+        }
+
+        // Add ended listener
+        this.boundAdvance = () => this.advanceSequence();
+        video.addEventListener('ended', this.boundAdvance, { once: true });
+
+        // Play video
+        video.play().catch(err => console.log('Mobile portrait video play prevented:', err));
+      }
+    } else {
+      // For Collections image, display for 5 seconds then advance
+      this.sequenceTimer = setTimeout(() => this.advanceSequence(), this.collectionsDisplayTime);
+    }
+  }
+
+  /**
+   * Advance to the next item in the sequence
+   */
+  advanceSequence() {
+    if (!this.isRunning) return;
+
+    // Reset current video if needed
+    const current = this.sequence[this.currentIndex];
+    if (current.type === 'video') {
+      const triangle = this.triangles[current.name];
+      const video = triangle?.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+
+    // Move to next item (loop back to 0 after last)
+    this.currentIndex = (this.currentIndex + 1) % this.sequence.length;
+
+    // Play the next item
+    this.playCurrentItem();
+  }
+}
+
+/**
  * Initialize on DOM ready
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -1297,6 +1741,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mobile landscape sequence controller - plays videos in sequence on mobile landscape
   new MobileLandscapeSequenceController();
+
+  // Mobile portrait sequence controller - plays videos in sequence on mobile portrait
+  new MobilePortraitSequenceController();
 
   // Initialize logo parallax
   new LogoParallax();

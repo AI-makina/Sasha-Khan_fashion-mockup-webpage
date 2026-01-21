@@ -30,10 +30,17 @@ class BagsController {
   }
 
   /**
+   * Check if viewport is mobile portrait (width <= 767px, height > 500px)
+   */
+  isMobilePortrait() {
+    return window.innerWidth <= 767 && window.innerHeight > 500;
+  }
+
+  /**
    * Select the correct video element based on viewport
    */
   selectVideo() {
-    if (this.isTabletPortrait() && this.tabletPortraitVideo) {
+    if ((this.isTabletPortrait() || this.isMobilePortrait()) && this.tabletPortraitVideo) {
       this.video = this.tabletPortraitVideo;
     } else if (this.desktopVideo) {
       this.video = this.desktopVideo;

@@ -33,11 +33,14 @@ class LuxuryCardsController {
     // Mobile landscape detection (height <= 500px, landscape orientation)
     this.isMobileLandscape = () => window.innerHeight <= 500 && window.innerWidth > window.innerHeight;
 
-    // Combined detection for opacity fade (tablet + mobile landscape)
-    this.isTablet = () => this.isTabletLandscape() || this.isTabletPortrait() || this.isMobileLandscape();
+    // Mobile portrait detection (width <= 767px, height > 500px)
+    this.isMobilePortrait = () => window.innerWidth <= 767 && window.innerHeight > 500;
+
+    // Combined detection for opacity fade (tablet + mobile landscape + mobile portrait)
+    this.isTablet = () => this.isTabletLandscape() || this.isTabletPortrait() || this.isMobileLandscape() || this.isMobilePortrait();
 
     // Select correct video based on viewport
-    this.bagsVideo = this.isTabletPortrait() && this.tabletPortraitVideo
+    this.bagsVideo = (this.isTabletPortrait() || this.isMobilePortrait()) && this.tabletPortraitVideo
       ? this.tabletPortraitVideo
       : this.desktopVideo;
 
@@ -70,7 +73,7 @@ class LuxuryCardsController {
   setupResizeHandler() {
     window.addEventListener('resize', () => {
       // Re-select video based on new viewport
-      this.bagsVideo = this.isTabletPortrait() && this.tabletPortraitVideo
+      this.bagsVideo = (this.isTabletPortrait() || this.isMobilePortrait()) && this.tabletPortraitVideo
         ? this.tabletPortraitVideo
         : this.desktopVideo;
     });

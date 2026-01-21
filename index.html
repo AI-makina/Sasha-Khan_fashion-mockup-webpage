@@ -77,6 +77,39 @@
     </ul>
   </nav>
 
+  <!-- Mobile Portrait Menu Button -->
+  <button class="mobile-portrait-menu-btn" aria-label="Open menu" aria-expanded="false">MENU</button>
+
+  <!-- Mobile Portrait Navigation Menu -->
+  <nav class="mobile-portrait-menu" aria-label="Mobile portrait navigation">
+    <ul class="mobile-portrait-menu__list">
+      <li class="mobile-portrait-menu__item mobile-portrait-menu__item--has-submenu">
+        <span class="mobile-portrait-menu__label">Carries</span>
+        <ul class="mobile-portrait-menu__submenu">
+          <li><a href="#" class="mobile-portrait-menu__link" data-scroll-target="lux">LUX</a></li>
+          <li><a href="#" class="mobile-portrait-menu__link" data-scroll-target="ode">ODE</a></li>
+        </ul>
+      </li>
+      <li class="mobile-portrait-menu__item mobile-portrait-menu__item--has-submenu">
+        <span class="mobile-portrait-menu__label">Outwear</span>
+        <ul class="mobile-portrait-menu__submenu">
+          <li><a href="elite.html" class="mobile-portrait-menu__link">ELITE</a></li>
+          <li><a href="freedom.html" class="mobile-portrait-menu__link">FREEDOM</a></li>
+          <li><a href="glamour.html" class="mobile-portrait-menu__link">GLAMOUR</a></li>
+        </ul>
+      </li>
+      <li class="mobile-portrait-menu__item">
+        <a href="xxvi-sion.html" class="mobile-portrait-menu__label">Eyewear</a>
+      </li>
+      <li class="mobile-portrait-menu__item">
+        <a href="#world-press-section" class="mobile-portrait-menu__label">Press</a>
+      </li>
+      <li class="mobile-portrait-menu__item">
+        <a href="#contact-section" class="mobile-portrait-menu__label">Contact</a>
+      </li>
+    </ul>
+  </nav>
+
   <!-- Skip to main content link for accessibility -->
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
 
@@ -788,9 +821,23 @@
       </header>
 
       <!-- Editorial Layout Grid -->
+      <!-- Note: Hero column comes first in HTML for mobile portrait float wrapping -->
+      <!-- CSS order property controls visual order for other viewports -->
       <div class="world-press__editorial">
 
-        <!-- Left Column: Text Content -->
+        <!-- Hero Image (first in DOM for float wrapping) -->
+        <div class="world-press__column world-press__column--hero">
+          <figure class="world-press__figure world-press__figure--hero">
+            <div class="world-press__image-frame">
+              <img src="assets/images/world-press/vogue-cover.png" alt="Sasha Khan Vogue Cover" loading="lazy">
+            </div>
+            <figcaption class="world-press__figcaption">
+              <em>Vogue</em> Winter Edition
+            </figcaption>
+          </figure>
+        </div>
+
+        <!-- Text Content -->
         <div class="world-press__column world-press__column--text">
 
           <!-- Opening Paragraph with Drop Cap -->
@@ -814,18 +861,6 @@
             From the catwalks of <strong class="world-press__location">Europe</strong> to the pages of fashion's most coveted publication, Sasha Khan continues to redefine haute couture for the modern era.
           </p>
 
-        </div>
-
-        <!-- Right Column: Hero Image -->
-        <div class="world-press__column world-press__column--hero">
-          <figure class="world-press__figure world-press__figure--hero">
-            <div class="world-press__image-frame">
-              <img src="assets/images/world-press/vogue-cover.png" alt="Sasha Khan Vogue Cover" loading="lazy">
-            </div>
-            <figcaption class="world-press__figcaption">
-              <em>Vogue</em> Winter Edition
-            </figcaption>
-          </figure>
         </div>
 
       </div>

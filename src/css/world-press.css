@@ -101,15 +101,19 @@
   margin-bottom: var(--space-md);
 }
 
+/* Text appears first visually (left) even though hero is first in DOM */
 .world-press__column--text {
   max-width: 500px;
+  order: 1;
 }
 
+/* Hero appears second visually (right) */
 .world-press__column--hero {
   position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  order: 2;
 }
 
 .world-press__figure--hero {
