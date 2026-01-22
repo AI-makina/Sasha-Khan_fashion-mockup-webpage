@@ -424,3 +424,19 @@
     transform: translateX(0);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   DESKTOP ONLY — Fix LUX product names visibility
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 1201px) {
+  .product-card {
+    overflow: visible;
+  }
+
+  .product-card__name {
+    opacity: 1;
+    visibility: visible;
+    display: block;
+  }
+}
